@@ -1,11 +1,13 @@
 package com.yuekehoutai;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StartApplication<mian> {
+@MapperScan("com.yuekehoutai.mapper")
+public class StartApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SpringApplication.class,args);
+        SpringApplication.run(StartApplication.class, args);
     }
 }
