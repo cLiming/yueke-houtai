@@ -15,5 +15,8 @@
     <sql id="Base_Column_List">
         id, name, tel, password, id_card
     </sql>
+    <select id="selectWokerPermissions" resultMap="BaseResultMap">
+       SELECT m.* FROM t_worker AS w LEFT JOIN t_worker_role as wr ON w.id=wr.w_id LEFT JOIN t_role_permission as rp on wr.r_id=rp.r_id LEFT JOIN t_menu AS m ON rp.m_id=m.id WHERE w.id={work.id}
+    </select>
 
 </mapper>
