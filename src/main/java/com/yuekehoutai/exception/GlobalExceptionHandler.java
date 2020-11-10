@@ -12,9 +12,6 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-
-
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 	//定义不同的方法处理不同类型的异常
