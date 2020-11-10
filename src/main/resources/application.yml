@@ -1,0 +1,16 @@
+server:
+  port: 80
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://81.69.254.181:3306/db_hospital?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: Clm853211585
+    type: com.alibaba.druid.pool.DruidDataSource
+  mvc:
+    date-format: yyyy-MM-dd
+  jackson:
+    date-format: yyyy-MM-dd
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
