@@ -38,8 +38,8 @@ public class WorkerServiceImpl extends ServiceImpl<WorkerMapper, Worker> impleme
     }
 
     @Override
-    public List<Menu> selectWokerPermissions() {
-
+    public List<Menu> selectWokerPermissions(Worker worker) {
+        workerMapper.selectWokerPermissions(worker);
         return null;
     }
 }
