@@ -1,5 +1,6 @@
 package com.yuekehoutai.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -35,6 +36,17 @@ public class Activity implements Serializable {
 
     private Integer typ;
 
+    @TableField("city_id")
+    private Integer cityId;
+
+
+    public Integer getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
+    }
 
     public Integer getId() {
         return id;
@@ -103,14 +115,15 @@ public class Activity implements Serializable {
     @Override
     public String toString() {
         return "Activity{" +
-        "id=" + id +
-        ", name=" + name +
-        ", number=" + number +
-        ", price=" + price +
-        ", description=" + description +
-        ", cId=" + cId +
-        ", actTypeId=" + actTypeId +
-        ", typ=" + typ +
-        "}";
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", number=" + number +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", cId=" + cId +
+                ", actTypeId=" + actTypeId +
+                ", typ=" + typ +
+                ", cityId=" + cityId +
+                '}';
     }
 }

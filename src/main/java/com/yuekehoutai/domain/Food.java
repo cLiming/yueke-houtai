@@ -1,5 +1,6 @@
 package com.yuekehoutai.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -37,6 +38,16 @@ public class Food implements Serializable {
 
     private Integer typ;
 
+    @TableField("city_id")
+    private Integer cityId;
+
+    public Integer getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
+    }
 
     public Integer getId() {
         return id;
@@ -122,6 +133,6 @@ public class Food implements Serializable {
         ", description=" + description +
         ", sales=" + sales +
         ", typ=" + typ +
-        "}";
+        ",cityId="+cityId+ "}";
     }
 }

@@ -43,7 +43,6 @@ public class Car implements Serializable {
 
     private Integer typ;
 
-    @TableField("endTime")
     private LocalDateTime endTime;
 
 
