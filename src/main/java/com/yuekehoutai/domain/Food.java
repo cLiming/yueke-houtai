@@ -38,6 +38,16 @@ public class Food implements Serializable {
 
     private Integer typ;
 
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @TableField("city_id")
     private Integer cityId;
 

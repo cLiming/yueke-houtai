@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuekehoutai.domain.Food;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuekehoutai.domain.param.FoodListParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <p>
@@ -15,4 +16,5 @@ import com.yuekehoutai.domain.param.FoodListParam;
  */
 public interface FoodService extends IService<Food> {
     Page<Food> foodList(FoodListParam foodListParam);
+    boolean addFood(MultipartFile[] files,Food food)throws Exception;
 }
