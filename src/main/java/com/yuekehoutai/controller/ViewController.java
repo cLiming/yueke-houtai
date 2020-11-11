@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -20,7 +21,7 @@ import javax.annotation.Resource;
  * @author corazon
  * @since 2020-11-10
  */
-@Controller
+@RestController
 @RequestMapping("/view")
 public class ViewController {
     @Resource
@@ -31,5 +32,13 @@ public class ViewController {
         Page<View> viewPage = viewService.selectAll(page);
         return new JsonResult(200,"success",null,viewPage);
     }
+
+    //新增景点
+    public JsonResult insertView()throws Exception{
+
+        return new JsonResult(200,"success",null,null);
+    }
+
+    //
 }
 
