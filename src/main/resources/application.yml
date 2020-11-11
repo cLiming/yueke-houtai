@@ -1,6 +1,10 @@
 server:
   port: 80
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 30MB
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://81.69.254.181:3306/db_camp?useUnicode=true&characterEncoding=utf-8
