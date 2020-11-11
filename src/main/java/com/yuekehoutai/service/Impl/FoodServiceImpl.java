@@ -7,7 +7,9 @@ import com.yuekehoutai.domain.param.FoodListParam;
 import com.yuekehoutai.mapper.FoodMapper;
 import com.yuekehoutai.service.FoodService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yuekehoutai.util.OosManagerUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <p>
@@ -41,5 +43,21 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food> implements Fo
             wrapper.orderByDesc("sales");
         }
         return this.page(foodPage,wrapper);
+    }
+
+    @Override
+    public boolean addFood(MultipartFile[] files, Food food) throws Exception {
+        String Path = "food/img";
+        StringBuffer images = new StringBuffer();
+        for(int i=0;i<files.length;i++){
+            String imagePath = OosManagerUtil.uploadFile(files[i], Path);
+            if(i==files.length-1){
+                images.append(imagePath);
+            }else{
+                images.append(imagePath+",");
+            }
+        }
+        food.setImage(images.toString());
+        return this.save(food);
     }
 }

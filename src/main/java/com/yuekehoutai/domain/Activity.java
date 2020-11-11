@@ -39,6 +39,15 @@ public class Activity implements Serializable {
     @TableField("city_id")
     private Integer cityId;
 
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public Integer getCityId() {
         return cityId;

@@ -3,7 +3,9 @@ package com.yuekehoutai.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuekehoutai.domain.Activity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yuekehoutai.domain.param.ActInsertParam;
 import com.yuekehoutai.domain.param.ActListParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <p>
@@ -15,4 +17,7 @@ import com.yuekehoutai.domain.param.ActListParam;
  */
 public interface ActivityService extends IService<Activity> {
     Page actList(ActListParam actListParam)throws Exception;
+
+    boolean addAct(MultipartFile[] files, Activity activity)throws Exception;
+
 }
