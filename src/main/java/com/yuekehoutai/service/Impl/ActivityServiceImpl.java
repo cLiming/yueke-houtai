@@ -1,6 +1,9 @@
 package com.yuekehoutai.service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuekehoutai.domain.Activity;
+import com.yuekehoutai.domain.param.ActListParam;
 import com.yuekehoutai.mapper.ActivityMapper;
 import com.yuekehoutai.service.ActivityService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -16,5 +19,23 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> implements ActivityService {
-
+    @Override
+    public Page actList(ActListParam param) throws Exception {
+        QueryWrapper<Activity> wrapper = new QueryWrapper<>();
+        wrapper.eq("act_type_id",param.getType());
+        wrapper.eq("city_id",param.getCityId());
+        if(!param.getName().isEmpty()){
+            wrapper.like("name",param.getName());
+        }
+        if (param.getCId()!=null){
+            wrapper.eq("c_id",param.getCId());
+        }
+        if(param.getPriceType()==0){
+            wrapper.orderByAsc("price");
+        }else if (param.getPriceType()==1){
+            wrapper.orderByDesc("price");
+        }
+        Page<Activity> page = new Page<>(param.getPageIndex(), param.getPageNum());
+        return this.page(page,wrapper);
+    }
 }
