@@ -50,7 +50,7 @@ public class WorkerController {
         return new JsonResult(200, "success",workersService.selectButton(worker),null );
     }
     //得到用户的1、2级菜单
-    @GetMapping("selectButton")
+    @GetMapping("selectMenu")
     public JsonResult selectMenu(Worker worker){
 
         return new JsonResult(200, "success",workersService.selectMenu(worker),null );

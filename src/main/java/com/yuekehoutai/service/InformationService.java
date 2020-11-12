@@ -1,5 +1,7 @@
 package com.yuekehoutai.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yuekehoutai.Dto.InformationDto;
 import com.yuekehoutai.domain.Information;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -12,5 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-11-10
  */
 public interface InformationService extends IService<Information> {
-
+    Page<InformationDto> selectInformation(InformationDto informationDto,Page<Information> page) throws Exception;
+    void deleteInformation(Integer id) throws Exception;
 }
