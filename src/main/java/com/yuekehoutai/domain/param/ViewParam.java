@@ -1,6 +1,7 @@
 package com.yuekehoutai.domain.param;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @AllArgsConstructor
@@ -27,4 +28,6 @@ public class ViewParam {
     private String image;
 
     private Integer page;
+
+    private MultipartFile[] file;
 }

@@ -18,4 +18,6 @@ import java.util.List;
 public interface ViewService extends IService<View> {
      Page<View> selectAll(ViewParam viewParam)throws Exception;
      void insrtView(ViewParam viewParam)throws Exception;
+     void deleteView(Integer id)throws Exception;
+     void updateView(ViewParam viewParam)throws Exception;
 }
