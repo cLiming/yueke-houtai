@@ -1,7 +1,11 @@
 package com.yuekehoutai.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuekehoutai.domain.View;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yuekehoutai.domain.param.ViewParam;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +16,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-11-10
  */
 public interface ViewService extends IService<View> {
-
+     Page<View> selectAll(ViewParam viewParam)throws Exception;
+     void insrtView(ViewParam viewParam)throws Exception;
+     void deleteView(Integer id)throws Exception;
+     void updateView(ViewParam viewParam)throws Exception;
 }
