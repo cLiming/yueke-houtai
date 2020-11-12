@@ -42,9 +42,16 @@ public class InformationController {
         return new JsonResult(200, "success", null, informationService.selectInformation(informationDto,page));
     }
     //新增景区资讯(包括上传图片)
-    @RequestMapping("insert")
-    public JsonResult actInsert(MultipartFile[] files, @Valid ActInsertParam param) throws Exception {
-
+    @RequestMapping("insertInformation")
+    public JsonResult actInsert(InformationParam informationParam) throws Exception {
+        for (int i = 0;i< informationParam.getImages().length;i++){
+            if(informationParam.getImages()[i]==null){
+                return new JsonResult(500,"图片不能为空",null,null);
+            }
+            if (!(informationParam.getImages()[i].getOriginalFilename().endsWith(".jpg")||informationParam.getImages()[i].getOriginalFilename().endsWith(".png"))) {
+                return new JsonResult(500,"图片格式错误,只能上传jpg或者png格式图片",null,null);
+            }
+        }
         return new JsonResult(200, "success", null, null);
     }
     //删除旅游资讯
