@@ -53,6 +53,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
                 images.append(imagePath+",");
             }
         }
+        activity.setTyp(2);
         activity.setImage(images.toString());
         return this.save(activity);
     }
