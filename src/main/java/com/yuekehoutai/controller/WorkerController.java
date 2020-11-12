@@ -7,6 +7,7 @@ import com.yuekehoutai.util.JsonResult;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,18 @@ public class WorkerController {
             subject.login(token);
         }
         return new JsonResult(200,"success",null,null);
+    }
+    //得到用户的3级按钮
+    @GetMapping("selectButton")
+    public JsonResult selectButton(Worker worker){
+
+        return new JsonResult(200, "success",workersService.selectButton(worker),null );
+    }
+    //得到用户的1、2级菜单
+    @GetMapping("selectButton")
+    public JsonResult selectMenu(Worker worker){
+
+        return new JsonResult(200, "success",workersService.selectMenu(worker),null );
     }
 }
 

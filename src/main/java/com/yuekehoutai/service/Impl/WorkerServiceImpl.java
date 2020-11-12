@@ -39,7 +39,18 @@ public class WorkerServiceImpl extends ServiceImpl<WorkerMapper, Worker> impleme
 
     @Override
     public List<Menu> selectWokerPermissions(Worker worker) {
-        workerMapper.selectWokerPermissions(worker);
-        return null;
+
+        return workerMapper.selectWokerPermissions(worker);
+    }
+
+    @Override
+    public List<Menu> selectButton(Worker worker) {
+
+        return workerMapper.selectButton(worker);
+    }
+
+    @Override
+    public List<Menu> selectMenu(Worker worker) {
+        return workerMapper.selectMenu(worker);
     }
 }

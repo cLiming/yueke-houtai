@@ -1,11 +1,11 @@
 package com.yuekehoutai.domain;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author corazon
- * @since 2020-11-10
+ * @since 2020-11-11
  */
 @TableName("t_car")
 public class Car implements Serializable {
@@ -43,7 +43,6 @@ public class Car implements Serializable {
 
     private Integer typ;
 
-    @TableField("endTime")
     private LocalDateTime endTime;
 
 

@@ -32,13 +32,10 @@ public class MpGenerator {
         stConfig.setCapitalMode(true) // 全局大写命名
                 .setNaming(NamingStrategy.underline_to_camel) //下划线转驼峰
                 .setTablePrefix("t_")
-                .setInclude("t_accommodation","t_act_type","t_activity","t_banner","t_bussiness","t_buycar","t_camp",
-                        "t_car","t_city","t_collection","t_evaluate","t_food","t_goods","t_guide","t_image","t_information",
-                        "t_menu","t_order","t_order_cardetail","t_order_detail","t_role","t_role_permission","t_shoppingcart",
-                        "t_user","t_view","t_worker","t_worker_role");
+                .setInclude("t_worker");
         //4.包名策略
         PackageConfig pkConfig = new PackageConfig();
-        pkConfig.setParent("com.yuekehoutai")//父包名
+        pkConfig.setParent("com.yuekehoutai.haha")//父包名
                 .setMapper("mapper")
                 .setEntity("domain")
                 .setService("service")

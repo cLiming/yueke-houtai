@@ -17,4 +17,6 @@ import java.util.List;
 public interface WorkerService extends IService<Worker> {
     Worker selectByWorkerName(String tel) throws Exception;
     List<Menu> selectWokerPermissions(Worker worker);
+    List<Menu> selectButton(Worker worker);
+    List<Menu> selectMenu(Worker worker);
 }
