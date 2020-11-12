@@ -1,20 +1,21 @@
 package com.yuekehoutai.controller;
 
 
-import com.yuekehoutai.domain.Activity;
 import com.yuekehoutai.domain.Food;
 import com.yuekehoutai.domain.param.FoodInsertParam;
 import com.yuekehoutai.domain.param.FoodListParam;
+import com.yuekehoutai.domain.param.FoodUpdateParam;
+import com.yuekehoutai.exception.ProjectException;
 import com.yuekehoutai.service.FoodService;
 import com.yuekehoutai.util.JsonResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 /**
  * <p>
@@ -36,15 +37,12 @@ public class FoodController {
     public JsonResult selectAll(@Valid FoodListParam foodListParam){
         return new JsonResult(200,"success",null,foodService.foodList(foodListParam));
     }
-
+    //新增美食
     @RequestMapping("insert")
     public JsonResult foodInsert(@Valid FoodInsertParam param) throws Exception {
         for (int i = 0;i< param.getFiles().length;i++){
-            if(param.getFiles()[i]==null){
-                return new JsonResult(500,"图片不能为空",null,null);
-            }
             if (!(param.getFiles()[i].getOriginalFilename().endsWith(".jpg")||param.getFiles()[i].getOriginalFilename().endsWith(".png"))) {
-                return new JsonResult(500,"图片格式错误,只能上传jpg或者png格式图片",null,null);
+                throw new ProjectException(1001, "只能上传jpg或png格式的图片");
             }
         }
         Food food = new Food();
@@ -56,6 +54,62 @@ public class FoodController {
             return new JsonResult(500, "服务器错误", null, null);
         }
     }
+    //更新美食信息
+    @RequestMapping("update")
+    public JsonResult foodUpdate(@Valid FoodUpdateParam param)throws Exception{
+        if(param.getFiles()!=null){
+            for (int i = 0;i< param.getFiles().length;i++){
+                if (!(param.getFiles()[i].getOriginalFilename().endsWith(".jpg")||param.getFiles()[i].getOriginalFilename().endsWith(".png"))) {
+                    throw new ProjectException(1001, "只能上传jpg或png格式的图片");
+                }
+            }
+        }
+        Food food = new Food();
+        BeanUtils.copyProperties(param,food);
+        boolean tag = foodService.updateFood(param.getFiles(),food);
+        if (tag) {
+            return new JsonResult(200, "success", null, null);
+        }else {
+            return new JsonResult(500, "服务器错误", null, null);
+        }
+    }
 
+    //删除美食
+    @RequestMapping("delete")
+    public JsonResult deleteById(Integer id)throws Exception{
+        if(id==null){
+            throw new ProjectException(1007,"参数错误");
+        }
+        if(foodService.removeById(id)){
+            return new JsonResult(200,"success",null,null);
+        }else {
+            return new JsonResult(500,"删除失败,请联系平台管理员",null,null);
+        }
+    }
+
+    //单点删除美食图片
+    @RequestMapping("deleteImage")
+    public JsonResult deleteImage(Integer id,String image)throws Exception{
+        if(id==null||image.isEmpty()){
+            throw new ValidationException("参数错误");
+        }
+        if(foodService.removeImage(id, image)){
+            return new JsonResult(200,"success",null,null);
+        }else {
+            throw new ProjectException(500,"删除失败");
+        }
+    }
+    //通过ID删除所有活动图片
+    @RequestMapping("deleteImageAll")
+    public JsonResult deleteImageAll(Integer id)throws Exception{
+        if(id==null){
+            throw new ValidationException("参数错误");
+        }
+        if(foodService.removeImages(id)){
+            return new JsonResult(200,"success",null,null);
+        }else {
+            throw new ProjectException(500,"删除失败");
+        }
+    }
 }
 

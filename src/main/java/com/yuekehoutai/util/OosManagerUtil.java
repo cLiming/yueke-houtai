@@ -1,9 +1,12 @@
 package com.yuekehoutai.util;
 
 import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.model.DeleteObjectsRequest;
+import com.aliyun.oss.model.DeleteObjectsResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.UUID;
 
 public class OosManagerUtil {
@@ -44,6 +47,24 @@ public class OosManagerUtil {
         fileContent.close();
         //System.err.println(FilePath.accessUrl + "/" +  fileName);
         return FilePath.accessUrl + "/" + remotePath + "/" + fileName;
+    }
+
+    public static void deleteFile(String objectPath)throws Exception{
+        OSSClient ossClient = new OSSClient(FilePath.endpoint, FilePath.accessKeyId,
+                FilePath.accessKeySecret);
+        //删除文件
+        ossClient.deleteObject(FilePath.bucketName, StringTool.trimStr(objectPath,FilePath.accessUrl+"/"));
+        // 关闭OSSClient。
+        ossClient.shutdown();
+    }
+
+    public static void deleteFiles(List<String> keys)throws Exception{
+        OSSClient ossClient = new OSSClient(FilePath.endpoint, FilePath.accessKeyId,
+                FilePath.accessKeySecret);
+        DeleteObjectsResult deleteObjectsResult = ossClient.deleteObjects(new DeleteObjectsRequest(FilePath.bucketName).withKeys(keys));
+        List<String> deletedObjects = deleteObjectsResult.getDeletedObjects();
+        // 关闭OSSClient。
+        ossClient.shutdown();
     }
 
 }

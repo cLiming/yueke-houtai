@@ -17,4 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface FoodService extends IService<Food> {
     Page<Food> foodList(FoodListParam foodListParam);
     boolean addFood(MultipartFile[] files,Food food)throws Exception;
+    boolean updateFood(MultipartFile[] files,Food food)throws Exception;
+    boolean removeImage(Integer id,String  image)throws Exception;
+    boolean removeImages(Integer id)throws Exception;
 }

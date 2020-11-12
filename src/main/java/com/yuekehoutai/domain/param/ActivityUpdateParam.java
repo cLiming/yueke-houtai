@@ -1,6 +1,5 @@
 package com.yuekehoutai.domain.param;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,23 +12,19 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FoodInsertParam {
+public class ActivityUpdateParam {
+    @NotNull
+    private Integer id;
     @NotNull
     private String name;
     @NotNull
-    private Integer cId;
+    private Integer number;
     @NotNull
     private Double price;
     @NotNull
-    private String address;
-    @NotNull
-    private Integer number;
-    @NotNull
     private String description;
+    @NotNull
+    private Integer actTypeId;
 
-    private Integer typ;
-    @NotNull
-    private Integer cityId;
-    @NotNull
     private MultipartFile[] files;
 }

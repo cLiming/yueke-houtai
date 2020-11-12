@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuekehoutai.Dto.InformationDto;
 import com.yuekehoutai.domain.Activity;
 import com.yuekehoutai.domain.Information;
-import com.yuekehoutai.domain.param.ActInsertParam;
 import com.yuekehoutai.param.InformationParam;
 import com.yuekehoutai.service.InformationService;
 
