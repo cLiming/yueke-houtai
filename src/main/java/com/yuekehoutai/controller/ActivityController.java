@@ -38,21 +38,18 @@ public class ActivityController {
 
     //新增活动(包括上传图片)
     @RequestMapping("insert")
-    public JsonResult actInsert(MultipartFile[] files, @Valid ActInsertParam param) throws Exception {
-        if(files==null){
-            return new JsonResult(500,"请上传营地图片",null,null);
-        }
-        for (int i = 0;i< files.length;i++){
-            if(files[i]==null){
+    public JsonResult actInsert(@Valid ActInsertParam param) throws Exception {
+        for (int i = 0;i< param.getFiles().length;i++){
+            if(param.getFiles()[i]==null){
                 return new JsonResult(500,"图片不能为空",null,null);
             }
-            if (!(files[i].getOriginalFilename().endsWith(".jpg")||files[i].getOriginalFilename().endsWith(".png"))) {
+            if (!(param.getFiles()[i].getOriginalFilename().endsWith(".jpg")||param.getFiles()[i].getOriginalFilename().endsWith(".png"))) {
                 return new JsonResult(500,"图片格式错误,只能上传jpg或者png格式图片",null,null);
             }
         }
         Activity activity = new Activity();
         BeanUtils.copyProperties(param,activity);
-        boolean tag = actService.addAct(files,activity);
+        boolean tag = actService.addAct(param.getFiles(),activity);
         if (tag) {
             return new JsonResult(200, "success", null, null);
         }else {
