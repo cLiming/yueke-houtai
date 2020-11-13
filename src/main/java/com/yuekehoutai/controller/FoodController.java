@@ -8,10 +8,9 @@ import com.yuekehoutai.domain.param.FoodUpdateParam;
 import com.yuekehoutai.exception.ProjectException;
 import com.yuekehoutai.service.FoodService;
 import com.yuekehoutai.util.JsonResult;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -32,13 +31,13 @@ public class FoodController {
     private FoodService foodService;
 
 
-    //根据条件分页查询美食列表(城市id,营地ID,名称,)
-    @RequestMapping("selectAll")
+    //根据条件分页查询美食列表(城市id,营地ID,名称)
+    @GetMapping("selectAll")
     public JsonResult selectAll(@Valid FoodListParam foodListParam){
         return new JsonResult(200,"success",null,foodService.foodList(foodListParam));
     }
     //新增美食
-    @RequestMapping("insert")
+    @PostMapping("insert")
     public JsonResult foodInsert(@Valid FoodInsertParam param) throws Exception {
         for (int i = 0;i< param.getFiles().length;i++){
             if (!(param.getFiles()[i].getOriginalFilename().endsWith(".jpg")||param.getFiles()[i].getOriginalFilename().endsWith(".png"))) {
@@ -55,7 +54,7 @@ public class FoodController {
         }
     }
     //更新美食信息
-    @RequestMapping("update")
+    @PutMapping("update")
     public JsonResult foodUpdate(@Valid FoodUpdateParam param)throws Exception{
         if(param.getFiles()!=null){
             for (int i = 0;i< param.getFiles().length;i++){
@@ -75,7 +74,7 @@ public class FoodController {
     }
 
     //删除美食
-    @RequestMapping("delete")
+    @DeleteMapping("delete")
     public JsonResult deleteById(Integer id)throws Exception{
         if(id==null){
             throw new ProjectException(1007,"参数错误");
@@ -88,7 +87,7 @@ public class FoodController {
     }
 
     //单点删除美食图片
-    @RequestMapping("deleteImage")
+    @DeleteMapping("deleteImage")
     public JsonResult deleteImage(Integer id,String image)throws Exception{
         if(id==null||image.isEmpty()){
             throw new ValidationException("参数错误");
@@ -100,7 +99,7 @@ public class FoodController {
         }
     }
     //通过ID删除所有活动图片
-    @RequestMapping("deleteImageAll")
+    @DeleteMapping("deleteImageAll")
     public JsonResult deleteImageAll(Integer id)throws Exception{
         if(id==null){
             throw new ValidationException("参数错误");

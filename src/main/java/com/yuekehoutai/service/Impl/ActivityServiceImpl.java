@@ -33,7 +33,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
         QueryWrapper<Activity> wrapper = new QueryWrapper<>();
         wrapper.eq("act_type_id",param.getType());
         wrapper.eq("city_id",param.getCityId());
-        if(!param.getName().isEmpty()){
+        if(param.getName()!=null){
             wrapper.like("name",param.getName());
         }
         if (param.getCId()!=null){

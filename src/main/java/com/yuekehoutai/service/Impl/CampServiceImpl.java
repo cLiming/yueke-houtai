@@ -36,7 +36,7 @@ public class CampServiceImpl extends ServiceImpl<CampMapper, Camp> implements Ca
     public boolean campstatusUpdate(Integer id,Integer status) {
         UpdateWrapper<Camp> wrapper = new UpdateWrapper<Camp>();
         wrapper.eq("id",id);
-        wrapper.eq("status",status);
+        wrapper.set("status",status);
         return this.update(wrapper);
     }
 
