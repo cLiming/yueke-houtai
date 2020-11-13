@@ -3,6 +3,11 @@ package com.yuekehoutai.domain;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 /**
@@ -13,6 +18,10 @@ import java.io.Serializable;
  * @author corazon
  * @since 2020-11-10
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @TableName("t_banner")
 public class Banner implements Serializable {
 
@@ -25,37 +34,5 @@ public class Banner implements Serializable {
 
     private Integer status;
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getvId() {
-        return vId;
-    }
-
-    public void setvId(Integer vId) {
-        this.vId = vId;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "Banner{" +
-        "id=" + id +
-        ", vId=" + vId +
-        ", status=" + status +
-        "}";
-    }
+    private String image;
 }

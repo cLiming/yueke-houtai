@@ -45,14 +45,16 @@ public class WorkerController {
     }
     //得到用户的3级按钮
     @GetMapping("selectButton")
-    public JsonResult selectButton(Worker worker){
-
-        return new JsonResult(200, "success",workersService.selectButton(worker),null );
+    public JsonResult selectButton(Integer pid){
+        Subject subject = SecurityUtils.getSubject();
+        Worker worker = (Worker)subject.getPrincipal();
+        return new JsonResult(200, "success",workersService.selectButton(worker.getId(),pid),null );
     }
     //得到用户的1、2级菜单
-    @GetMapping("selectMenu")
-    public JsonResult selectMenu(Worker worker){
-
+    @GetMapping("/selectMenu")
+    public JsonResult selectMenu(){
+        Subject subject = SecurityUtils.getSubject();
+        Worker worker = (Worker)subject.getPrincipal();
         return new JsonResult(200, "success",workersService.selectMenu(worker),null );
     }
 }
