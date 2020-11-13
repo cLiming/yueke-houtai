@@ -4,6 +4,8 @@ package com.yuekehoutai.controller;
 import com.yuekehoutai.domain.param.CampListParam;
 import com.yuekehoutai.service.CampService;
 import com.yuekehoutai.util.JsonResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -27,12 +29,12 @@ public class CampController {
 
 
 
-    @RequestMapping("selectAllCheck")
+    @GetMapping("selectAllCheck")
     public JsonResult selectAllCheck(){
         return new JsonResult(200,"success",campService.selectAllCheck(),null);
     }
 
-    @RequestMapping("check")
+    @PostMapping("check")
     public JsonResult check(Integer id){
         boolean tag = campService.campstatusUpdate(id,1);
         if (tag) {
@@ -43,12 +45,13 @@ public class CampController {
     }
 
     //通过城市ID,营地名称,营地状态查询符合条件的所有营地
-    @RequestMapping("select")
+    @GetMapping("select")
     public JsonResult campList(@Valid CampListParam campListParam) throws Exception {
         return new JsonResult(200, "success", null, campService.campListLimit(campListParam));
     }
 
-    @RequestMapping("update")
+    //审核营地
+    @PostMapping("update")
     public JsonResult campUpdate(Integer id){
         boolean tag = campService.campstatusUpdate(id,0);
         if (tag) {

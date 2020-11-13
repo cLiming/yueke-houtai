@@ -8,10 +8,10 @@ import com.yuekehoutai.domain.param.ActivityUpdateParam;
 import com.yuekehoutai.exception.ProjectException;
 import com.yuekehoutai.service.ActivityService;
 import com.yuekehoutai.util.JsonResult;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -35,13 +35,13 @@ public class ActivityController {
 
 
     //条件查询所有活动
-    @RequestMapping("selectAll")
-    public JsonResult selectAll(ActListParam actListParam) throws Exception {
+    @GetMapping("selectAll")
+    public JsonResult selectAll(@Valid ActListParam actListParam) throws Exception {
         return new JsonResult(200,"success",null,actService.actList(actListParam));
     }
 
     //新增活动(包括上传图片)
-    @RequestMapping("insert")
+    @PostMapping("insert")
     public JsonResult actInsert(@Valid ActivityParam param) throws Exception {
         if (param.getFiles()==null){
             throw new ProjectException(1000, "图片不能为空");
@@ -62,7 +62,7 @@ public class ActivityController {
     }
 
     //修改活动
-    @RequestMapping("update")
+    @PutMapping("update")
     public JsonResult actUpdate(@Valid ActivityUpdateParam param)throws Exception{
         Activity activity = new Activity();
         BeanUtils.copyProperties(param,activity);
@@ -82,7 +82,7 @@ public class ActivityController {
     }
 
     //单选删除活动图片
-    @RequestMapping("deleteImage")
+    @DeleteMapping("deleteImage")
     public JsonResult deleteImage(Integer id,String image)throws Exception{
         if(id==null||image.isEmpty()){
             throw new ValidationException("参数错误");
@@ -95,7 +95,7 @@ public class ActivityController {
     }
 
     //通过ID删除所有活动图片
-    @RequestMapping("deleteImageAll")
+    @DeleteMapping("deleteImageAll")
     public JsonResult deleteImageAll(Integer id)throws Exception{
         if(id==null){
             throw new ValidationException("参数错误");
@@ -109,7 +109,7 @@ public class ActivityController {
 
 
     //通过id删除活动
-    @RequestMapping("delete")
+    @DeleteMapping("delete")
     public JsonResult actDelete(Integer id)throws Exception{
         if(id==null){
             throw new ProjectException(1007,"参数错误");

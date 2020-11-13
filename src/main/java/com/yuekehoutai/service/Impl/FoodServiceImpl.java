@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuekehoutai.util.FilePath;
 import com.yuekehoutai.util.OosManagerUtil;
 import com.yuekehoutai.util.StringTool;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,14 +30,15 @@ import java.util.List;
 @Service
 public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food> implements FoodService {
 
+    //根据条件查询美食列表
     @Override
     public Page<Food> foodList(FoodListParam param) {
         QueryWrapper<Food> wrapper = new QueryWrapper<>();
         Page<Food> foodPage = new Page<Food>(param.getPageIndex(),param.getPageNum());
-        if(!param.getName().isEmpty()){
+        if(param.getName()!=null){
             wrapper.like("name",param.getName());
         }
-        if(param.getCId()>0){
+        if(param.getCId()!=null&&param.getCId()>0){
             wrapper.eq("c_id",param.getCId());
         }
         if(param.getPriceType()==0){
@@ -52,6 +54,7 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food> implements Fo
         return this.page(foodPage,wrapper);
     }
 
+    //新增美食
     @Override
     public boolean addFood(MultipartFile[] files, Food food) throws Exception {
         String Path = "food/img";
@@ -68,6 +71,7 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food> implements Fo
         return this.save(food);
     }
 
+    //更改美食详情
     @Override
     public boolean updateFood(MultipartFile[] files, Food param) throws Exception {
         Food food = this.getById(param.getId());
@@ -76,6 +80,7 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food> implements Fo
         food.setAddress(param.getAddress());
         food.setNumber(param.getNumber());
         food.setDescription(param.getDescription());
+        System.out.println("img:"+food.getImage());
         if(files!=null){
             String Path = "food/img";
             StringBuffer images = new StringBuffer();
@@ -87,11 +92,17 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food> implements Fo
                     images.append(imagePath+",");
                 }
             }
-            food.setImage(food.getImage()+","+images.toString());
+            if(StringUtils.isEmpty(food.getImage())){
+                food.setImage(images.toString());
+            }else {
+                food.setImage(food.getImage()+","+images.toString());
+            }
         }
         return this.updateById(food);
     }
 
+
+    //删除图片(单选)
     @Override
     public boolean removeImage(Integer id, String image) throws Exception {
         Food food = this.getById(id);
@@ -101,6 +112,7 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food> implements Fo
         return this.updateById(food);
     }
 
+    //通过ID删除全部图片
     @Override
     public boolean removeImages(Integer id) throws Exception {
         Food food = this.getById(id);

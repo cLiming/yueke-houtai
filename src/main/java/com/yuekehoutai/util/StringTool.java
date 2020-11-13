@@ -27,7 +27,7 @@ public class StringTool {
         }
         StringBuilder newStr = new StringBuilder(str);
         if(newStr.indexOf(indexStr) == 0){
-            newStr = new StringBuilder(newStr.substring(indexStr.length()));//在开头
+            newStr = new StringBuilder(newStr.substring(indexStr.length()+1));//在开头
 
         }else if(newStr.indexOf(indexStr) == newStr.length() - indexStr.length()){
             newStr = new StringBuilder(newStr.substring(0,newStr.lastIndexOf(indexStr)-1));//在结尾
