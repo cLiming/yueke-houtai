@@ -2,14 +2,21 @@ package com.yuekehoutai.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yuekehoutai.domain.Activity;
 import com.yuekehoutai.domain.Food;
 import com.yuekehoutai.domain.param.FoodListParam;
 import com.yuekehoutai.mapper.FoodMapper;
 import com.yuekehoutai.service.FoodService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yuekehoutai.util.FilePath;
 import com.yuekehoutai.util.OosManagerUtil;
+import com.yuekehoutai.util.StringTool;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * <p>
@@ -59,5 +66,53 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food> implements Fo
         }
         food.setImage(images.toString());
         return this.save(food);
+    }
+
+    @Override
+    public boolean updateFood(MultipartFile[] files, Food param) throws Exception {
+        Food food = this.getById(param.getId());
+        food.setName(param.getName());
+        food.setPrice(param.getPrice());
+        food.setAddress(param.getAddress());
+        food.setNumber(param.getNumber());
+        food.setDescription(param.getDescription());
+        if(files!=null){
+            String Path = "food/img";
+            StringBuffer images = new StringBuffer();
+            for(int i=0;i<files.length;i++){
+                String imagePath = OosManagerUtil.uploadFile(files[i], Path);
+                if(i==files.length-1){
+                    images.append(imagePath);
+                }else{
+                    images.append(imagePath+",");
+                }
+            }
+            food.setImage(food.getImage()+","+images.toString());
+        }
+        return this.updateById(food);
+    }
+
+    @Override
+    public boolean removeImage(Integer id, String image) throws Exception {
+        Food food = this.getById(id);
+        String images = StringTool.trimImage(food.getImage(),image);
+        food.setImage(images);
+        OosManagerUtil.deleteFile(image);
+        return this.updateById(food);
+    }
+
+    @Override
+    public boolean removeImages(Integer id) throws Exception {
+        Food food = this.getById(id);
+        String[] s = food.getImage().split(",");
+        for(int i=0;i<s.length;i++){
+            s[i] = StringTool.trimStr(s[i], FilePath.accessUrl+"/");
+        }
+        List<String> images = new ArrayList<String>();
+        Collections.addAll(images, s);
+        System.out.println("imagesList:"+images.toString());
+        OosManagerUtil.deleteFiles(images);
+        food.setImage("");
+        return this.updateById(food);
     }
 }

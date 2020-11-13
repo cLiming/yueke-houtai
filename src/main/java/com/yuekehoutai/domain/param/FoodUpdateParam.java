@@ -1,10 +1,10 @@
 package com.yuekehoutai.domain.param;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
@@ -13,24 +13,19 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ActInsertParam {
+public class FoodUpdateParam {
+    @NotNull
+    private Integer id;
     @NotNull
     private String name;
     @NotNull
-    private Integer number;
-    @NotNull
     private Double price;
     @NotNull
+    private String address;
+    @NotNull
+    private Integer number;
+    @NotNull
     private String description;
-    @NotNull
-    private Integer cId;
-    @NotNull
-    private Integer actTypeId;
 
-    private Integer typ;
-    @NotNull
-    private Integer cityId;
-    @NotNull
     private MultipartFile[] files;
-
 }
