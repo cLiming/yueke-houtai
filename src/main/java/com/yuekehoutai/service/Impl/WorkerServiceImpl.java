@@ -44,13 +44,14 @@ public class WorkerServiceImpl extends ServiceImpl<WorkerMapper, Worker> impleme
     }
 
     @Override
-    public List<Menu> selectButton(Worker worker) {
+    public List<Menu> selectButton(Integer id,Integer pId) {
 
-        return workerMapper.selectButton(worker);
+        return workerMapper.selectButton(id,pId);
     }
 
     @Override
     public List<Menu> selectMenu(Worker worker) {
+        System.err.println(workerMapper.selectMenu(worker));
         return workerMapper.selectMenu(worker);
     }
 }

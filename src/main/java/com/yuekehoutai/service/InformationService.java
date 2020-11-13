@@ -16,4 +16,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface InformationService extends IService<Information> {
     Page<InformationDto> selectInformation(InformationDto informationDto,Page<Information> page) throws Exception;
     void deleteInformation(Integer id) throws Exception;
+    void insertInformation(InformationDto informationDto) throws Exception;
+    void updateInformation(InformationDto informationDto) throws Exception;
 }

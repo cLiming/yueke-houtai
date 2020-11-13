@@ -16,6 +16,6 @@ import java.util.List;
  */
 public interface WorkerMapper extends BaseMapper<Worker> {
     List<Menu> selectWokerPermissions(Worker worker);
-    List<Menu> selectButton(Worker worker);
+    List<Menu> selectButton(Integer id,Integer pId);
     List<Menu> selectMenu(Worker worker);
 }

@@ -4,18 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
-@Data
 @AllArgsConstructor
+@Data
 @NoArgsConstructor
 @Builder
-public class InformationDto {
+public class BannerDto {
     private Integer id;
 
-    private String title;
+    private Integer vId;
 
-    private String description;
-
-    private MultipartFile[] files;
+    private Integer status;
+    private String image;
 }

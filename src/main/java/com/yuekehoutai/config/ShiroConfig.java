@@ -88,7 +88,9 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/food/**", "anon");
 		filterChainDefinitionMap.put("/camp/**", "anon");
 		filterChainDefinitionMap.put("/car/*", "anon");
+		filterChainDefinitionMap.put("/worker/*", "anon");
 		filterChainDefinitionMap.put("/information/*", "anon");
+		filterChainDefinitionMap.put("/banner/*", "anon");
 		// 如果不满足上方所有的规则 则需要进行登录验证
 		filterChainDefinitionMap.put("/logout", "logout");
 		//在登陆之后或者通过记住我登陆之后都可以正常访问
