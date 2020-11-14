@@ -8,6 +8,10 @@ import com.yuekehoutai.domain.param.ActivityUpdateParam;
 import com.yuekehoutai.exception.ProjectException;
 import com.yuekehoutai.service.ActivityService;
 import com.yuekehoutai.util.JsonResult;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +32,7 @@ import javax.validation.constraints.NotNull;
  * @since 2020-11-10
  */
 @RestController
+@Api(tags = "活动接口")
 @RequestMapping("/activity")
 public class ActivityController {
     @Resource
@@ -35,12 +40,16 @@ public class ActivityController {
 
 
     //条件查询所有活动
+    @ApiOperation("查询活动（可以通过条件）")
+    @ApiImplicitParam(name = "actListParam",value = "营地活动param对象")
     @GetMapping("selectAll")
     public JsonResult selectAll(@Valid ActListParam actListParam) throws Exception {
         return new JsonResult(200,"success",null,actService.actList(actListParam));
     }
 
     //新增活动(包括上传图片)
+    @ApiOperation("新增活动")
+    @ApiImplicitParam(name = "ActivityParam",value = "营地活动param对象")
     @PostMapping("insert")
     public JsonResult actInsert(@Valid ActivityParam param) throws Exception {
         if (param.getFiles()==null){
@@ -62,6 +71,8 @@ public class ActivityController {
     }
 
     //修改活动
+    @ApiOperation("修改活动")
+    @ApiImplicitParam(name = "ActivityUpdateParam",value = "修改营地活动param对象")
     @PutMapping("update")
     public JsonResult actUpdate(@Valid ActivityUpdateParam param)throws Exception{
         Activity activity = new Activity();
@@ -82,6 +93,11 @@ public class ActivityController {
     }
 
     //单选删除活动图片
+    @ApiOperation("单选删除活动图片")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",value = "活动id"),
+            @ApiImplicitParam(name = "image",value = "活动图片")
+    })
     @DeleteMapping("deleteImage")
     public JsonResult deleteImage(Integer id,String image)throws Exception{
         if(id==null||image.isEmpty()){
@@ -95,6 +111,8 @@ public class ActivityController {
     }
 
     //通过ID删除所有活动图片
+    @ApiOperation("通过ID删除所有活动图片")
+    @ApiImplicitParam(name = "id",value = "活动id")
     @DeleteMapping("deleteImageAll")
     public JsonResult deleteImageAll(Integer id)throws Exception{
         if(id==null){
@@ -109,6 +127,8 @@ public class ActivityController {
 
 
     //通过id删除活动
+    @ApiOperation("通过id删除活动")
+    @ApiImplicitParam(name = "id",value = "活动id")
     @DeleteMapping("delete")
     public JsonResult actDelete(Integer id)throws Exception{
         if(id==null){

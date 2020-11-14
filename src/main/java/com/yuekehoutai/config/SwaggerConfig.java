@@ -20,36 +20,36 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-
+    /**
+     * 创建API应用
+     * apiInfo() 增加API相关信息
+     * 通过select()函数返回一个ApiSelectorBuilder实例,用来控制哪些接口暴露给Swagger来展现，
+     * 本例采用指定扫描的包路径来定义指定要建立API的目录。
+     *
+     * @return
+     */
     @Bean
-    public Docket createRestApi() {
-
-        //添加head参数配置start
-        ParameterBuilder tokenPar = new ParameterBuilder();
-        List<Parameter> pars = new ArrayList<>();
-        tokenPar.name("X-Token").description("用户token")
-                .modelRef(new ModelRef("string"))
-                .parameterType("header")
-                .required(false).build();
-        pars.add(tokenPar.build());
-
-        //API构建器
-        ApiInfoBuilder apiBuilder = new ApiInfoBuilder();
-        //设置API的相关信息
-        apiBuilder.title("悦客系统");
-        apiBuilder.description("只为成就更好的你");
-        apiBuilder.contact(new Contact("corazon", "", ""));
-        apiBuilder.version("1.0");
-        //构建API对象
-        ApiInfo api = apiBuilder.build();
-        //构建API清单 用于说明那些接口需要生成API文档
-        Docket docket = new Docket(DocumentationType.SWAGGER_2).apiInfo(api);
-        //定义接口（控制层）所在的包
-        docket.select().apis(RequestHandlerSelectors
-                .basePackage("com.yuekehoutai.controller"))
-                .paths(PathSelectors.any()).build()
-                .globalOperationParameters(pars);
-        return docket;
+    public Docket createRestApi(){
+        //版本类型是swagger2
+        return new Docket(DocumentationType.SWAGGER_2)
+                //通过调用自定义方法apiInfo，获得文档的主要信息
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.yuekehoutai.controller"))//扫描该包下面的API注解
+                .paths(PathSelectors.any())
+                .build();
+    }
+    /**
+     * 创建该API的基本信息（这些基本信息会展现在文档页面中）
+     * 访问地址：http://项目实际地址/swagger-ui.html
+     * @return
+     */
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("约克后台") //接口管理文档首页显示
+                .description("zy - Swagger使用演示")//API的描述
+                .version("1.0")
+                .build();
     }
 }
 
