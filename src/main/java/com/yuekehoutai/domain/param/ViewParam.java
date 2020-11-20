@@ -2,6 +2,7 @@ package com.yuekehoutai.domain.param;
 
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
+import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
@@ -26,7 +27,7 @@ public class ViewParam {
     private String location;
 
     private String image;
-
+    @NotNull
     private Integer page;
 
     private MultipartFile[] file;
