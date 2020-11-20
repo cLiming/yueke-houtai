@@ -4,6 +4,7 @@ package com.yuekehoutai.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuekehoutai.Dto.BannerDto;
 import com.yuekehoutai.domain.Banner;
+import com.yuekehoutai.exception.ProjectException;
 import com.yuekehoutai.param.BannerParam;
 import com.yuekehoutai.service.BannerService;
 import com.yuekehoutai.util.JsonResult;
@@ -36,8 +37,12 @@ public class BannerController {
     @ApiImplicitParam(name = "BannerParam",value = "bannerparam对象")
     @GetMapping("/selectBanner")
     public JsonResult selectBanner(BannerParam bannerParam) throws Exception{
-        Page<Banner> page = new Page<>(bannerParam.getPageNow(),bannerParam.getPageSize());
-        return new JsonResult(200, "success", null, bannerService.selectBanner(page));
+        if(bannerParam!=null&&bannerParam.getPageNow()!=null&&bannerParam.getPageSize()!=null){
+            Page<Banner> page = new Page<>(bannerParam.getPageNow(),bannerParam.getPageSize());
+            return new JsonResult(200, "success", null, bannerService.selectBanner(page));
+        }else {
+            throw new ProjectException(9002, "没有分页信息");
+        }
     }
     @ApiOperation("新增banner")
     @ApiImplicitParam(name = "BannerParam",value = "bannerparam对象")
