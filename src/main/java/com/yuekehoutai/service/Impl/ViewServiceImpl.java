@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuekehoutai.domain.View;
 import com.yuekehoutai.domain.param.ViewParam;
+import com.yuekehoutai.exception.ProjectException;
 import com.yuekehoutai.mapper.ViewMapper;
 import com.yuekehoutai.service.ViewService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -31,12 +32,14 @@ public class ViewServiceImpl extends ServiceImpl<ViewMapper, View> implements Vi
     private ViewMapper viewMapper;
     @Override
     public Page<View> selectAll(ViewParam viewParam) throws Exception {
-        Page<View> page1 = new Page<View>(viewParam.getPage(),3);
-
-        QueryWrapper<View> wrapper = new QueryWrapper<View>().eq(viewParam.getCId()!=null,"c_id",viewParam.getCId()).like(viewParam.getName()!=null,"name", viewParam.getName());
-        List<View> list = viewMapper.selectList(wrapper);
-        page1.setRecords(list);
-        return page1;
+        if(viewParam.getPage()!=null&&viewParam.getPage().equals("")){
+            Page<View> page1 = new Page<View>(viewParam.getPage(),3);
+            QueryWrapper<View> wrapper = new QueryWrapper<View>().eq(viewParam.getCId()!=null,"c_id",viewParam.getCId()).like(viewParam.getName()!=null,"name", viewParam.getName());
+            List<View> list = viewMapper.selectList(wrapper);
+            page1.setRecords(list);
+            return page1;
+        }
+        return null ;
     }
 
     @Override
@@ -54,7 +57,7 @@ public class ViewServiceImpl extends ServiceImpl<ViewMapper, View> implements Vi
                         sb.append(",");
                     }
                 }else{
-                    throw new RuntimeException("文件不符合规格");
+                    throw new ProjectException(502,"文件规格不符合");
                 }
             }
         }
@@ -84,7 +87,7 @@ public class ViewServiceImpl extends ServiceImpl<ViewMapper, View> implements Vi
                         sb.append(",");
                     }
                 }else{
-                    throw new RuntimeException("文件不符合规格");
+                    throw new ProjectException(502,"文件规格不符合");
                 }
             }
 

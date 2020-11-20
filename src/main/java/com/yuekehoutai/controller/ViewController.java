@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 /**
  * <p>
@@ -22,9 +23,36 @@ import javax.annotation.Resource;
  * @author corazon
  * @since 2020-11-10
  */
-@Controller
+@RestController
 @RequestMapping("/view")
 public class ViewController {
+    @Resource
+    private ViewService viewService;
+    //查询所有景点
+    @GetMapping("selectAll")
+    public JsonResult selectAll(@Valid ViewParam viewParam)throws Exception{
+        Page<View> viewPage = viewService.selectAll(viewParam);
+        return new JsonResult(200,"success",null,viewPage);
+    }
 
+    //新增景点
+    @PostMapping("insertView")
+    public JsonResult insertView(ViewParam viewParam)throws Exception{
+        viewService.insrtView(viewParam);
+        return new JsonResult(200,"success",null,null);
+    }
+
+    //删除景点
+    @DeleteMapping("deleteView")
+    public JsonResult deleteView(Integer id)throws Exception{
+        viewService.deleteView(id);
+        return new JsonResult(200,"success",null,null);
+    }
+    //修改景点
+    @PutMapping("updateView")
+    public JsonResult updateView( ViewParam viewParam)throws Exception{
+        viewService.updateView(viewParam);
+        return new JsonResult(200,"success",null,null);
+    }
 }
 
