@@ -49,7 +49,17 @@ public class ActivityController {
 
     //新增活动(包括上传图片)
     @ApiOperation("新增活动")
-    @ApiImplicitParam(name = "ActivityParam",value = "营地活动param对象")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",value = "id"),
+            @ApiImplicitParam(name = "name",value = "活动名称",required = true),
+            @ApiImplicitParam(name = "number",value = "剩余票数",required = true),
+            @ApiImplicitParam(name = "price",value = "价格",required = true),
+            @ApiImplicitParam(name = "description",value = "活动描述",required = true),
+            @ApiImplicitParam(name = "cId",value = "所属营地ID",required = true),
+            @ApiImplicitParam(name = "actTypeId",value = "活动类型ID",required = true),
+            @ApiImplicitParam(name = "cityId",value = "所属城市ID",required = true),
+            @ApiImplicitParam(name = "file",value = "活动图片",required = true),
+    })
     @PostMapping("insert")
     public JsonResult actInsert(@Valid ActivityParam param) throws Exception {
         if (param.getFiles()==null){
@@ -72,7 +82,15 @@ public class ActivityController {
 
     //修改活动
     @ApiOperation("修改活动")
-    @ApiImplicitParam(name = "ActivityUpdateParam",value = "修改营地活动param对象")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",value = "id",required = true),
+            @ApiImplicitParam(name = "name",value = "活动名称",required = true),
+            @ApiImplicitParam(name = "number",value = "剩余票数",required = true),
+            @ApiImplicitParam(name = "price",value = "价格",required = true),
+            @ApiImplicitParam(name = "description",value = "活动描述",required = true),
+            @ApiImplicitParam(name = "actTypeId",value = "活动类型ID",required = true),
+            @ApiImplicitParam(name = "file",value = "活动图片"),
+    })
     @PutMapping("update")
     public JsonResult actUpdate(@Valid ActivityUpdateParam param)throws Exception{
         Activity activity = new Activity();

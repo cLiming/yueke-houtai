@@ -5,6 +5,7 @@ import com.yuekehoutai.domain.Camp;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuekehoutai.domain.param.CampListParam;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -24,5 +25,12 @@ public interface CampService extends IService<Camp> {
     boolean campstatusUpdate(Integer id,Integer status);
 
     Page campListLimit(CampListParam param)throws Exception;
+
+    @Transactional
+    boolean removeImage(Integer id,String image)throws Exception;
+    @Transactional
+    boolean removeImages(Integer id)throws Exception;
+    @Transactional
+    boolean updateCamp(Camp camp, MultipartFile[] files)throws Exception;
 
 }

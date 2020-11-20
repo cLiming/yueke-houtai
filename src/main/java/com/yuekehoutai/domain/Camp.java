@@ -33,6 +33,19 @@ public class Camp implements Serializable {
 
     private String location;
 
+    /**
+     * 这是存储营地图片的，是一个图片路径数组
+     */
+    private String image;
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public Integer getId() {
         return id;
