@@ -39,7 +39,7 @@ public class WorkerController {
             @ApiImplicitParam(name = "worker",value = "员工对象"),
             @ApiImplicitParam(name = "rememberMe",value = "是否记住"),
     })
-    @RequestMapping("login")
+    @GetMapping("login")
     public JsonResult login(Worker worker, boolean rememberMe) throws Exception{
         System.out.println(worker.getTel());
         //String password=MD5Utils.MD5EncodeUtf8(user.getPassword());

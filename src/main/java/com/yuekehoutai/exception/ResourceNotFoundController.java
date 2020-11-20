@@ -17,20 +17,20 @@ public class ResourceNotFoundController implements ErrorController{
 		//自定义错误映射地址
 		return "/error";
 	}
-	@RequestMapping("error")
-	public ModelAndView handler404(HttpServletRequest request) throws Exception{
-		ModelAndView view = new ModelAndView();
-		String requestedWith = request.getHeader("x-requested-with");
-        if (requestedWith != null && requestedWith.equalsIgnoreCase("XMLHttpRequest")) {
-        	FastJsonJsonView jsonView = new FastJsonJsonView();
-        	HashMap<String,String> map = new HashMap<String,String>();
-        	map.put("code", "404");
-        	map.put("message", "找不到资源");
-        	jsonView.setAttributesMap(map);
-        	view.setView(jsonView);
-        } else {
-        	view.setViewName("redirect:/error/404.html");
-        }
-        return view;
-	}
+//	@RequestMapping("error")
+//	public ModelAndView handler404(HttpServletRequest request) throws Exception{
+//		ModelAndView view = new ModelAndView();
+//		String requestedWith = request.getHeader("x-requested-with");
+//        if (requestedWith != null && requestedWith.equalsIgnoreCase("XMLHttpRequest")) {
+//        	FastJsonJsonView jsonView = new FastJsonJsonView();
+//        	HashMap<String,String> map = new HashMap<String,String>();
+//        	map.put("code", "404");
+//        	map.put("message", "找不到资源");
+//        	jsonView.setAttributesMap(map);
+//        	view.setView(jsonView);
+//        } else {
+//        	view.setViewName("redirect:/error/404.html");
+//        }
+//        return view;
+//	}
 }

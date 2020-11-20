@@ -6,6 +6,7 @@ import com.yuekehoutai.util.JsonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +28,7 @@ public class ActTypeController {
     @Resource
     private ActTypeService actTypeService;
     @ApiOperation("查询所有活动类型")
-    @RequestMapping("selectAll")
+    @GetMapping("selectAll")
     public JsonResult selectAll(){
         return new JsonResult(200,"success",actTypeService.list(),null);
     }

@@ -34,7 +34,6 @@ public class ShiroConfig {
 	public WorkerRealm initRealm() {
 		return new WorkerRealm();
 	}
-
 	@Bean
 	public SecurityManager initSecurityManager() {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -51,7 +50,7 @@ public class ShiroConfig {
 		SimpleCookie cookie = new SimpleCookie("rememberMe");
 		cookie.setMaxAge(3*24*60*60);
 		cookieRememberMeManager.setCookie(cookie);
-		
+
 		cookieRememberMeManager.setCipherKey(Base64.decode("wGiHplamyXlVB11UXWol8g=="));
 		return cookieRememberMeManager;
 	}
@@ -94,12 +93,10 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/static/**", "anon");
 		filterChainDefinitionMap.put("/login", "anon");
 		//被shiro拦截的swagger资源放行
-		filterChainDefinitionMap.put("/doc.html/**", "anon");
-		filterChainDefinitionMap.put("/swagger-resources/**", "anon");
-		filterChainDefinitionMap.put("/v2/api-docs/**", "anon");
-		filterChainDefinitionMap.put("/webjars/**", "anon");
-		filterChainDefinitionMap.put("/swagger-resources/configuration/ui/**", "anon");
-		filterChainDefinitionMap.put("/swagger-resources/configuration/security/**", "anon");
+		filterChainDefinitionMap.put("/**/*", "anon");
+		filterChainDefinitionMap.put("/swagger-resources", "anon");
+		filterChainDefinitionMap.put("/v2/api-docs", "anon");
+		filterChainDefinitionMap.put("/webjars/springfox-swagger-ui/**", "anon");
 		// 如果不满足上方所有的规则 则需要进行登录验证
 		filterChainDefinitionMap.put("/logout", "logout");
 		//在登陆之后或者通过记住我登陆之后都可以正常访问
@@ -113,17 +110,17 @@ public class ShiroConfig {
 	}
 	//配置控制层的前置通知
 	//在通知中判断权限是否足够
-	@Bean
+	//@Bean
 	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
 		AuthorizationAttributeSourceAdvisor advisor=new AuthorizationAttributeSourceAdvisor();
-	    advisor.setSecurityManager(initSecurityManager());
-	    return advisor;
+		advisor.setSecurityManager(initSecurityManager());
+		return advisor;
 	}
 	//强制使用CGLIB动态代理
-	@Bean
+	//@Bean
 	public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator(){
 		DefaultAdvisorAutoProxyCreator app=new DefaultAdvisorAutoProxyCreator();
-	    app.setProxyTargetClass(true);
-	    return app;
+		app.setProxyTargetClass(true);
+		return app;
 	}
 }
