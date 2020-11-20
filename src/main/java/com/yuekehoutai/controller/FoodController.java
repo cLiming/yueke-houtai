@@ -8,6 +8,10 @@ import com.yuekehoutai.domain.param.FoodUpdateParam;
 import com.yuekehoutai.exception.ProjectException;
 import com.yuekehoutai.service.FoodService;
 import com.yuekehoutai.util.JsonResult;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +29,7 @@ import javax.validation.ValidationException;
  * @since 2020-11-10
  */
 @RestController
+@Api(tags = "营地美食")
 @RequestMapping("/food")
 public class FoodController {
     @Resource
@@ -32,11 +37,15 @@ public class FoodController {
 
 
     //根据条件分页查询美食列表(城市id,营地ID,名称)
+    @ApiOperation("根据条件分页查询美食列表")
+    @ApiImplicitParam(name = "foodListParam",value = "美食param对象")
     @GetMapping("selectAll")
     public JsonResult selectAll(@Valid FoodListParam foodListParam){
         return new JsonResult(200,"success",null,foodService.foodList(foodListParam));
     }
     //新增美食
+    @ApiOperation("新增美食")
+    @ApiImplicitParam(name = "FoodInsertParam",value = "美食新增param对象")
     @PostMapping("insert")
     public JsonResult foodInsert(@Valid FoodInsertParam param) throws Exception {
         for (int i = 0;i< param.getFiles().length;i++){
@@ -54,6 +63,8 @@ public class FoodController {
         }
     }
     //更新美食信息
+    @ApiOperation("更新美食信息")
+    @ApiImplicitParam(name = "FoodInsertParam",value = "更新食品param对象")
     @PutMapping("update")
     public JsonResult foodUpdate(@Valid FoodUpdateParam param)throws Exception{
         if(param.getFiles()!=null){
@@ -74,6 +85,8 @@ public class FoodController {
     }
 
     //删除美食
+    @ApiOperation("删除美食")
+    @ApiImplicitParam(name = "id",value = "美食id")
     @DeleteMapping("delete")
     public JsonResult deleteById(Integer id)throws Exception{
         if(id==null){
@@ -87,6 +100,11 @@ public class FoodController {
     }
 
     //单点删除美食图片
+    @ApiOperation("单点删除美食图片")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",value = "美食id"),
+            @ApiImplicitParam(name = "image",value = "美食图片")
+    })
     @DeleteMapping("deleteImage")
     public JsonResult deleteImage(Integer id,String image)throws Exception{
         if(id==null||image.isEmpty()){
@@ -99,6 +117,8 @@ public class FoodController {
         }
     }
     //通过ID删除所有活动图片
+    @ApiOperation("通过ID删除所有活动图片")
+    @ApiImplicitParam(name = "id",value = "美食id")
     @DeleteMapping("deleteImageAll")
     public JsonResult deleteImageAll(Integer id)throws Exception{
         if(id==null){

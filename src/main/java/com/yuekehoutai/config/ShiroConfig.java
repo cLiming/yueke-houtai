@@ -87,10 +87,19 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/activity/**", "anon");
 		filterChainDefinitionMap.put("/food/**", "anon");
 		filterChainDefinitionMap.put("/camp/**", "anon");
-		filterChainDefinitionMap.put("/car/*", "anon");
-		filterChainDefinitionMap.put("/worker/*", "anon");
-		filterChainDefinitionMap.put("/information/*", "anon");
-		filterChainDefinitionMap.put("/banner/*", "anon");
+		filterChainDefinitionMap.put("/car/**", "anon");
+		filterChainDefinitionMap.put("/worker/**", "anon");
+		filterChainDefinitionMap.put("/information/**", "anon");
+		filterChainDefinitionMap.put("/banner/**", "anon");
+		filterChainDefinitionMap.put("/static/**", "anon");
+		filterChainDefinitionMap.put("/login", "anon");
+		//被shiro拦截的swagger资源放行
+		filterChainDefinitionMap.put("/doc.html/**", "anon");
+		filterChainDefinitionMap.put("/swagger-resources/**", "anon");
+		filterChainDefinitionMap.put("/v2/api-docs/**", "anon");
+		filterChainDefinitionMap.put("/webjars/**", "anon");
+		filterChainDefinitionMap.put("/swagger-resources/configuration/ui/**", "anon");
+		filterChainDefinitionMap.put("/swagger-resources/configuration/security/**", "anon");
 		// 如果不满足上方所有的规则 则需要进行登录验证
 		filterChainDefinitionMap.put("/logout", "logout");
 		//在登陆之后或者通过记住我登陆之后都可以正常访问
