@@ -39,7 +39,7 @@ public class OrderCardetailController {
     @Resource
     private OrderCardetailService orderCardetailService;
     //查询营地的所有
-    @ApiOperation("管理员所在的营地的房车（分页）")
+    @ApiOperation("管理员所在的营地的房车（分页）这个对象是存在subject中 必须登录才能实现")
     @ApiImplicitParam(name = "carParam",value = "管理员所在的营地的房车")
     @GetMapping("/selectCampCar")
     public JsonResult selectCampCar(CarParam carParam) throws Exception{
@@ -49,7 +49,7 @@ public class OrderCardetailController {
         return new JsonResult(200,"success", null, orderCardetailService.selectCampCar(carDto,page));
     }
     //查询营地房车的订单
-    @ApiOperation("查询营地房车的订单（分页）")
+    @ApiOperation("查询营地房车的订单（分页）这个对象是存在subject中 必须登录才能实现")
     @ApiImplicitParam(name = "orderRentDetailParam",value = "订单详情param对象")
     @GetMapping("/selectTimeCarOrder")
     public JsonResult selectTimeCarOrder(OrderRentDetailParam orderRentDetailParam) throws Exception{
@@ -63,7 +63,9 @@ public class OrderCardetailController {
     @PutMapping("/addCarOrderTime")
     public JsonResult addCarOrderTime(OrderRentDetailParam orderRentDetailParam) throws Exception{
         OrderRentDetailDto orderRentDetailDto = new OrderRentDetailDto();
+        System.err.println("param"+orderRentDetailParam.getEndTime());
         BeanUtils.copyProperties(orderRentDetailParam, orderRentDetailDto);
+        System.err.println("dto"+orderRentDetailDto.getEndTime());
         orderCardetailService.addCarOrderTime(orderRentDetailDto);
         return new JsonResult(200, "success", null, null);
     }

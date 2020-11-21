@@ -20,7 +20,7 @@ public class CarParam {
 
     private Integer cId;
 
-    private Integer uId;
+    private Integer ownerId;
 
     private Double preprice;
 

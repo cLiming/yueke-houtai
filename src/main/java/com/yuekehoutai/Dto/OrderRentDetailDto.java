@@ -20,9 +20,9 @@ public class OrderRentDetailDto {
 
     private String name;
 
-    private LocalDateTime startTime;
+    private String startTime;
 
-    private LocalDateTime endTime;
+    private String endTime;
 
     private Integer days;
 }

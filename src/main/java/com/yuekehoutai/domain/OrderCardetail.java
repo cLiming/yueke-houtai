@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @author corazon
  * @since 2020-11-10
  */
-@TableName("t_order_cardetail")
+@TableName("t_order_rentdetail")
 public class OrderCardetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
