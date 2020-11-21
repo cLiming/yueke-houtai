@@ -42,7 +42,6 @@ public class ActivityController {
     //条件查询所有活动
     @ApiOperation("查询活动（可以通过条件）")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "cId",value = "营地id"),
             @ApiImplicitParam(name = "name",value = "活动名称"),
             @ApiImplicitParam(name = "cityId",value = "所处城市",required = true),
             @ApiImplicitParam(name = "priceType",value = "价格升降类型0升序 1降序",required = true),
@@ -65,7 +64,7 @@ public class ActivityController {
             @ApiImplicitParam(name = "cId",value = "所属营地ID",required = true),
             @ApiImplicitParam(name = "actTypeId",value = "活动类型ID",required = true),
             @ApiImplicitParam(name = "cityId",value = "所属城市ID",required = true),
-            @ApiImplicitParam(name = "file",value = "活动图片",required = true),
+            @ApiImplicitParam(name = "files",value = "活动图片",required = true,allowMultiple=true,dataType = "__file"),
     })
     @PostMapping("insert")
     public JsonResult actInsert(@Valid ActivityParam param) throws Exception {
@@ -79,6 +78,7 @@ public class ActivityController {
         }
         Activity activity = new Activity();
         BeanUtils.copyProperties(param,activity);
+        activity.setTyp(2);
         boolean tag = actService.addAct(param.getFiles(),activity);
         if (tag) {
             return new JsonResult(200, "success", null, null);

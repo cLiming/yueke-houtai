@@ -26,7 +26,6 @@ public class ActivityParam {
     @NotNull
     private Integer actTypeId;
 
-    private Integer typ;
     @NotNull
     private Integer cityId;
 
