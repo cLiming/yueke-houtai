@@ -100,7 +100,13 @@ public class CampServiceImpl extends ServiceImpl<CampMapper, Camp> implements Ca
                 images.append(imagePath+",");
             }
         }
-        camp.setImage(camp.getImage()+","+images.toString());
+        Camp camp1 = this.getById(camp.getId());
+        if(camp1.getImage()!=null){
+            camp.setImage(camp1.getImage()+","+images.toString());
+        }else{
+            camp.setImage(images.toString());
+        }
+
         return this.updateById(camp);
     }
 
