@@ -60,6 +60,7 @@ public class WorkerController {
     @GetMapping("selectButton")
     public JsonResult selectButton(Integer pid){
         Subject subject = SecurityUtils.getSubject();
+//        System.out.println(subject.isAuthenticated());
         Worker worker = (Worker)subject.getPrincipal();
         return new JsonResult(200, "success",workersService.selectButton(worker.getId(),pid),null );
     }

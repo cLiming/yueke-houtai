@@ -47,6 +47,7 @@ public class WorkerRealm extends AuthorizingRealm{
 		String tel=(String)token.getPrincipal();//取出令牌中的用户的电话号码
 		try {
 			Worker worker = workersService.selectByWorkerName(tel);
+			System.out.println(worker);
 			if(worker!=null) {
 				//封装认证信息  shiro会使用这个对象进行后续的密码比对
 				SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(worker,worker.getPassword(),getName());
