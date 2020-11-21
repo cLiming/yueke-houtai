@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuekehoutai.Dto.CarDto;
 import com.yuekehoutai.domain.Car;
+import com.yuekehoutai.domain.Contract;
 import com.yuekehoutai.exception.ProjectException;
 import com.yuekehoutai.mapper.CarMapper;
+import com.yuekehoutai.mapper.ContractMapper;
 import com.yuekehoutai.service.CarService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuekehoutai.util.DateUtil;
@@ -31,10 +33,11 @@ import java.util.List;
 public class CarServiceImpl extends ServiceImpl<CarMapper, Car> implements CarService {
     @Resource
     private CarMapper carMapper;
+    @Resource
+    private ContractMapper contractMapper;
     @Override
     public IPage<Car>  selectShareCar(CarDto carDto, Page<Car> page) {
         QueryWrapper<Car> carQueryWrapper = new QueryWrapper<>();
-
         if(carDto!=null){
             //条件查询 有就查询 没有就不查询
             carQueryWrapper.like(carDto.getName()!=null,"name",carDto.getName());
@@ -56,23 +59,34 @@ public class CarServiceImpl extends ServiceImpl<CarMapper, Car> implements CarSe
 
     @Override
     public void updateShareCarPrice(CarDto carDto) throws Exception {
-        QueryWrapper<Car> carQueryWrapper = new QueryWrapper<>();
-        if(carDto!=null&&carDto.getPrice()!=null&&carDto.getPreprice()!=null){
-            carQueryWrapper.eq(carDto.getId()!=null,"id", carDto.getId());
-            Car car = carMapper.selectOne(carQueryWrapper);
-            if(car!=null){
-                UpdateWrapper<Car> carUpdateWrapper = new UpdateWrapper<>();
-                carUpdateWrapper.set("status", 0);
-                carUpdateWrapper.eq("id", car.getId());
-                carUpdateWrapper.set("price",carDto.getPrice());
-                carUpdateWrapper.set("preprice",carDto.getPreprice());
-                carMapper.update(null, carUpdateWrapper);
-            }else{
-                throw new ProjectException(9004, "信息不存在");
+        //先判断是否有合同
+        QueryWrapper<Contract> contractQueryWrapper = new QueryWrapper<>();
+        contractQueryWrapper.eq(carDto.getOwnerId()!=null, "owner_id", carDto.getOwnerId());
+        contractQueryWrapper.eq(carDto.getId()!=null, "car_id", carDto.getId());
+        Contract contract = contractMapper.selectOne(contractQueryWrapper);
+        if(contract!=null){
+            QueryWrapper<Car> carQueryWrapper = new QueryWrapper<>();
+            if(carDto!=null&&carDto.getPrice()!=null&&carDto.getPreprice()!=null){
+                carQueryWrapper.eq(carDto.getId()!=null,"id", carDto.getId());
+                Car car = carMapper.selectOne(carQueryWrapper);
+
+                if(car!=null){
+                    UpdateWrapper<Car> carUpdateWrapper = new UpdateWrapper<>();
+                    carUpdateWrapper.set("status", 0);
+                    carUpdateWrapper.eq("id", car.getId());
+                    carUpdateWrapper.set("price",carDto.getPrice());
+                    carUpdateWrapper.set("preprice",carDto.getPreprice());
+                    carMapper.update(null, carUpdateWrapper);
+                }else{
+                    throw new ProjectException(9004, "信息不存在");
+                }
+            }else {
+                throw new ProjectException(9003, "传递信息不正确或者房车必须有价格");
             }
         }else {
-            throw new ProjectException(9003, "传递信息不正确或者房车必须有价格");
+            throw new ProjectException(9003, "没有合同");
         }
+
 
     }
 

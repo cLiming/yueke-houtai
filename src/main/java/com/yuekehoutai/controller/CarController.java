@@ -47,7 +47,7 @@ public class CarController {
     }
 
     //在审核的同时(从审核状态3改为空闲状态0) 房车的定金和金额输入（不输入审核金额不能通过）
-    @ApiOperation("审核房车，同时输入定金和金河")
+    @ApiOperation("审核房车，同时输入定金和金额 先判断有没有合同")
     @ApiImplicitParam(name = "carParam",value = "房车param对象")
     @PutMapping("/updateShareCarPrice")
     public JsonResult updateShareCarPrice(CarParam carParam) throws Exception {
