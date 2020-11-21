@@ -41,7 +41,15 @@ public class ActivityController {
 
     //条件查询所有活动
     @ApiOperation("查询活动（可以通过条件）")
-    @ApiImplicitParam(name = "actListParam",value = "营地活动param对象")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "cId",value = "营地id"),
+            @ApiImplicitParam(name = "name",value = "活动名称"),
+            @ApiImplicitParam(name = "cityId",value = "所处城市",required = true),
+            @ApiImplicitParam(name = "priceType",value = "价格升降类型0升序 1降序",required = true),
+            @ApiImplicitParam(name = "type",value = "活动类型",required = true),
+            @ApiImplicitParam(name = "pageIndex",value = "当前页码",required = true),
+            @ApiImplicitParam(name = "pageNum",value = "每页数据条数",required = true),
+    })
     @GetMapping("selectAll")
     public JsonResult selectAll(@Valid ActListParam actListParam) throws Exception {
         return new JsonResult(200,"success",null,actService.actList(actListParam));
@@ -50,7 +58,6 @@ public class ActivityController {
     //新增活动(包括上传图片)
     @ApiOperation("新增活动")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id",value = "id"),
             @ApiImplicitParam(name = "name",value = "活动名称",required = true),
             @ApiImplicitParam(name = "number",value = "剩余票数",required = true),
             @ApiImplicitParam(name = "price",value = "价格",required = true),

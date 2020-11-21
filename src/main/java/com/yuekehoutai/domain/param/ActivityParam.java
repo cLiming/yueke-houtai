@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ActivityParam {
-    private Integer id;
     @NotNull
     private String name;
     @NotNull
