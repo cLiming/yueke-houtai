@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +38,8 @@ import javax.validation.constraints.NotNull;
 public class ActivityController {
     @Resource
     private ActivityService actService;
+    @Resource
+    private RedisTemplate<String,Object> rt;
 
 
     //条件查询所有活动
