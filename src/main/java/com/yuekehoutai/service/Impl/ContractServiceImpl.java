@@ -1,6 +1,7 @@
 package com.yuekehoutai.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.yuekehoutai.domain.Contract;
 import com.yuekehoutai.exception.ProjectException;
 import com.yuekehoutai.mapper.ContractMapper;
@@ -24,11 +25,21 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
     private ContractMapper contractMapper;
     @Override
     public void insertContract(Contract contract){
+        contract.setStatus("0");
         QueryWrapper<Contract> contractQueryWrapper = new QueryWrapper<>();
         contractQueryWrapper.eq(contract.getCarId()!=null, "car_id", contract.getCarId());
+        contractQueryWrapper.eq("status",0);
         Contract contract1 = contractMapper.selectOne(contractQueryWrapper);
         if(contract1==null){
-            contractMapper.insert(contract);
+            QueryWrapper<Contract> contractQueryWrapper1 = new QueryWrapper<>();
+            contractQueryWrapper1.eq("status",1);
+            Contract contract2 = contractMapper.selectOne(contractQueryWrapper1);
+            if(contract2!=null){
+
+            }else{
+                contractMapper.insert(contract);
+            }
+
         }else{
             throw new ProjectException(9003, "车合同已经存在");
         }
@@ -40,7 +51,11 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
         contractQueryWrapper.eq("id", id);
         Contract contract = contractMapper.selectOne(contractQueryWrapper);
         if(contract!=null){
-            contractMapper.deleteById(id);
+            UpdateWrapper<Contract> contractUpdateWrapper = new UpdateWrapper<>();
+            contractUpdateWrapper.eq("id",id);
+            contractUpdateWrapper.set("status", 1);
+
+            contractMapper.update(null, contractUpdateWrapper);
         }else {
             throw new ProjectException(9003, "合同不存在");
         }

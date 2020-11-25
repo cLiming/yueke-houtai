@@ -66,7 +66,5 @@ public class CarController {
         carService.deleteCar(carDto);
         return new JsonResult(200, "success", null, null);
     }
-
-
 }
 
