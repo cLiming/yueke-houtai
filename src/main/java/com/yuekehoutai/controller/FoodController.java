@@ -38,14 +38,29 @@ public class FoodController {
 
     //根据条件分页查询美食列表(城市id,营地ID,名称)
     @ApiOperation("根据条件分页查询美食列表")
-    @ApiImplicitParam(name = "foodListParam",value = "美食param对象")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "name",value = "营地名称",required=true),
+            @ApiImplicitParam(name = "priceType",value = "价格顺序0升序1降序",required=true),
+            @ApiImplicitParam(name = "saleType",value = "销售量顺序0升序1降序",required=true),
+            @ApiImplicitParam(name = "cityId",value = "所选城市ID",required=true),
+            @ApiImplicitParam(name = "pageIndex",value = "当前页码",required=true),
+            @ApiImplicitParam(name = "pageNum",value = "每页查询数据量",required=true)
+    })
     @GetMapping("selectAll")
     public JsonResult selectAll(@Valid FoodListParam foodListParam){
         return new JsonResult(200,"success",null,foodService.foodList(foodListParam));
     }
     //新增美食
     @ApiOperation("新增美食")
-    @ApiImplicitParam(name = "FoodInsertParam",value = "美食新增param对象")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "name",value = "营地名称",required=true),
+            @ApiImplicitParam(name = "price",value = "美食价格",required=true),
+            @ApiImplicitParam(name = "address",value = "商家地址",required=true),
+            @ApiImplicitParam(name = "cityId",value = "所选城市ID",required=true),
+            @ApiImplicitParam(name = "number",value = "剩余数量",required=true),
+            @ApiImplicitParam(name = "description",value = "描述",required=true),
+            @ApiImplicitParam(name = "files",value = "图片上传",required=true)
+    })
     @PostMapping("insert")
     public JsonResult foodInsert(@Valid FoodInsertParam param) throws Exception {
         for (int i = 0;i< param.getFiles().length;i++){
@@ -64,7 +79,15 @@ public class FoodController {
     }
     //更新美食信息
     @ApiOperation("更新美食信息")
-    @ApiImplicitParam(name = "FoodInsertParam",value = "更新食品param对象")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "name",value = "营地名称",required=true),
+            @ApiImplicitParam(name = "id",value = "美食ID",required=true),
+            @ApiImplicitParam(name = "price",value = "美食价格",required=true),
+            @ApiImplicitParam(name = "address",value = "商家地址",required=true),
+            @ApiImplicitParam(name = "number",value = "剩余数量",required=true),
+            @ApiImplicitParam(name = "description",value = "描述",required=true),
+            @ApiImplicitParam(name = "files",value = "图片上传",required=true)
+    })
     @PutMapping("update")
     public JsonResult foodUpdate(@Valid FoodUpdateParam param)throws Exception{
         if(param.getFiles()!=null){

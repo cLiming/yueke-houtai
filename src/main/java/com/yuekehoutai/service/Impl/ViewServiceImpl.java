@@ -32,7 +32,7 @@ public class ViewServiceImpl extends ServiceImpl<ViewMapper, View> implements Vi
     private ViewMapper viewMapper;
     @Override
     public Page<View> selectAll(ViewParam viewParam) throws Exception {
-        if(viewParam.getPage()!=null&&viewParam.getPage().equals("")){
+        if(viewParam.getPage()!=null&&!viewParam.getPage().equals("")){
             Page<View> page1 = new Page<View>(viewParam.getPage(),3);
             QueryWrapper<View> wrapper = new QueryWrapper<View>().eq(viewParam.getCId()!=null,"c_id",viewParam.getCId()).like(viewParam.getName()!=null,"name", viewParam.getName());
             List<View> list = viewMapper.selectList(wrapper);

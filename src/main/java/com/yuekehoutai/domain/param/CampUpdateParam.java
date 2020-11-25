@@ -12,24 +12,21 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ActivityParam {
+public class CampUpdateParam {
+    @NotNull
+    private Integer id;
     @NotNull
     private String name;
     @NotNull
-    private Integer number;
-    @NotNull
-    private Double price;
+    private String address;
     @NotNull
     private String description;
     @NotNull
-    private Integer cId;
-    @NotNull
-    private Integer actTypeId;
-
-    @NotNull
     private Integer cityId;
+    @NotNull
+    private String location;
 
     private MultipartFile[] files;
-
-
+    @NotNull
+    private String tel;
 }

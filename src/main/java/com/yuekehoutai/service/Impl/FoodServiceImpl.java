@@ -42,9 +42,9 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food> implements Fo
             wrapper.eq("c_id",param.getCId());
         }
         if(param.getPriceType()==0){
-            wrapper.orderByDesc("price");
-        }else if (param.getPriceType()==1){
             wrapper.orderByAsc("price");
+        }else if (param.getPriceType()==1){
+            wrapper.orderByDesc("price");
         }
         if(param.getSaleType()==0){
             wrapper.orderByAsc("sales");
@@ -67,6 +67,7 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food> implements Fo
                 images.append(imagePath+",");
             }
         }
+        food.setTyp(1);
         food.setImage(images.toString());
         return this.save(food);
     }
