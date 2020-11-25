@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -37,11 +38,20 @@ import javax.validation.constraints.NotNull;
 public class ActivityController {
     @Resource
     private ActivityService actService;
+    @Resource
+    private RedisTemplate<String,Object> rt;
 
 
     //条件查询所有活动
     @ApiOperation("查询活动（可以通过条件）")
-    @ApiImplicitParam(name = "actListParam",value = "营地活动param对象")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "name",value = "活动名称"),
+            @ApiImplicitParam(name = "cityId",value = "所处城市",required = true),
+            @ApiImplicitParam(name = "priceType",value = "价格升降类型0升序 1降序",required = true),
+            @ApiImplicitParam(name = "type",value = "活动类型",required = true),
+            @ApiImplicitParam(name = "pageIndex",value = "当前页码",required = true),
+            @ApiImplicitParam(name = "pageNum",value = "每页数据条数",required = true),
+    })
     @GetMapping("selectAll")
     public JsonResult selectAll(@Valid ActListParam actListParam) throws Exception {
         return new JsonResult(200,"success",null,actService.actList(actListParam));
@@ -49,7 +59,16 @@ public class ActivityController {
 
     //新增活动(包括上传图片)
     @ApiOperation("新增活动")
-    @ApiImplicitParam(name = "ActivityParam",value = "营地活动param对象")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "name",value = "活动名称",required = true),
+            @ApiImplicitParam(name = "number",value = "剩余票数",required = true),
+            @ApiImplicitParam(name = "price",value = "价格",required = true),
+            @ApiImplicitParam(name = "description",value = "活动描述",required = true),
+            @ApiImplicitParam(name = "cId",value = "所属营地ID",required = true),
+            @ApiImplicitParam(name = "actTypeId",value = "活动类型ID",required = true),
+            @ApiImplicitParam(name = "cityId",value = "所属城市ID",required = true),
+            @ApiImplicitParam(name = "files",value = "活动图片",required = true,allowMultiple=true,dataType = "__file"),
+    })
     @PostMapping("insert")
     public JsonResult actInsert(@Valid ActivityParam param) throws Exception {
         if (param.getFiles()==null){
@@ -62,6 +81,7 @@ public class ActivityController {
         }
         Activity activity = new Activity();
         BeanUtils.copyProperties(param,activity);
+        activity.setTyp(2);
         boolean tag = actService.addAct(param.getFiles(),activity);
         if (tag) {
             return new JsonResult(200, "success", null, null);
@@ -72,7 +92,15 @@ public class ActivityController {
 
     //修改活动
     @ApiOperation("修改活动")
-    @ApiImplicitParam(name = "ActivityUpdateParam",value = "修改营地活动param对象")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",value = "id",required = true),
+            @ApiImplicitParam(name = "name",value = "活动名称",required = true),
+            @ApiImplicitParam(name = "number",value = "剩余票数",required = true),
+            @ApiImplicitParam(name = "price",value = "价格",required = true),
+            @ApiImplicitParam(name = "description",value = "活动描述",required = true),
+            @ApiImplicitParam(name = "actTypeId",value = "活动类型ID",required = true),
+            @ApiImplicitParam(name = "file",value = "活动图片"),
+    })
     @PutMapping("update")
     public JsonResult actUpdate(@Valid ActivityUpdateParam param)throws Exception{
         Activity activity = new Activity();

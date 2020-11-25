@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuekehoutai.mapper.ContractMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yuekehoutai.domain.Contract">
+        <id column="id" property="id" />
+        <result column="owner_id" property="ownerId" />
+        <result column="status" property="status" />
+        <result column="car_id" property="carId" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="days" property="days" />
+        <result column="price" property="price" />
+        <result column="totals" property="totals" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, owner_id, status, car_id, start_time, end_time, days, price, totals
+    </sql>
+
+</mapper>
