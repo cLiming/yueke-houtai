@@ -38,8 +38,6 @@ import javax.validation.constraints.NotNull;
 public class ActivityController {
     @Resource
     private ActivityService actService;
-    @Resource
-    private RedisTemplate<String,Object> rt;
 
 
     //条件查询所有活动
