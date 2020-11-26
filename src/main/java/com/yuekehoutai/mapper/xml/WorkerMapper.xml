@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuekehoutai.mapper.WorkerMapper">
 
-    <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.yuekehoutai.domain.Worker">
         <id column="id" property="id" />
         <result column="name" property="name" />
@@ -12,17 +11,24 @@
         <result column="c_id" property="cId" />
     </resultMap>
 
-    <!-- 通用查询结果列 -->
+    <resultMap id="MenuResultMap" type="com.yuekehoutai.domain.Menu">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="resources" property="resources" />
+        <result column="p_id" property="pId" />
+        <result column="level" property="level" />
+    </resultMap>
+
     <sql id="Base_Column_List">
         id, name, tel, password, id_card,c_id
     </sql>
-    <select id="selectWokerPermissions" resultMap="BaseResultMap">
+    <select id="selectWokerPermissions" resultMap="MenuResultMap">
        SELECT m.* FROM t_worker AS w LEFT JOIN t_worker_role as wr ON w.id=wr.w_id LEFT JOIN t_role_permission as rp on wr.r_id=rp.r_id LEFT JOIN t_menu AS m ON rp.m_id=m.id WHERE w.id={work.id}
     </select>
-    <select id="selectMenu" resultMap="BaseResultMap">
+    <select id="selectMenu" resultMap="MenuResultMap">
         SELECT m.* FROM t_worker AS w LEFT JOIN t_worker_role as wr ON w.id=wr.w_id LEFT JOIN t_role_permission as rp on wr.r_id=rp.r_id LEFT JOIN t_menu AS m ON rp.m_id=m.id WHERE w.id={work.id} AND m.level&lt;3
     </select>
-    <select id="selectButton" resultMap="BaseResultMap">
+    <select id="selectButton" resultMap="MenuResultMap">
         SELECT m.* FROM t_worker AS w LEFT JOIN t_worker_role as wr ON w.id=wr.w_id LEFT JOIN t_role_permission as rp on wr.r_id=rp.r_id LEFT JOIN t_menu AS m ON rp.m_id=m.id WHERE w.id={id} AND m.level=3 and m.p_id=#{pId}
     </select>
 </mapper>
