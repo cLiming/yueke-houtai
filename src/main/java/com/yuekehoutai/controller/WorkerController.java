@@ -2,6 +2,7 @@ package com.yuekehoutai.controller;
 
 
 import com.yuekehoutai.domain.Worker;
+import com.yuekehoutai.domain.WorkerRole;
 import com.yuekehoutai.service.WorkerService;
 import com.yuekehoutai.util.JsonResult;
 import io.swagger.annotations.Api;
@@ -10,14 +11,15 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -60,10 +62,12 @@ public class WorkerController {
     @GetMapping("selectButton")
     public JsonResult selectButton(Integer pid){
         Subject subject = SecurityUtils.getSubject();
+//        System.out.println(subject.isAuthenticated());
         Worker worker = (Worker)subject.getPrincipal();
         return new JsonResult(200, "success",workersService.selectButton(worker.getId(),pid),null );
     }
     //得到用户的1、2级菜单
+
     @ApiOperation("得到员工的1、2级菜单")
     @GetMapping("/selectMenu")
     public JsonResult selectMenu(){
@@ -71,5 +75,30 @@ public class WorkerController {
         Worker worker = (Worker)subject.getPrincipal();
         return new JsonResult(200, "success",workersService.selectMenu(worker),null );
     }
+    @ApiOperation("查询所有员工")
+    @GetMapping("/selectUser")
+    @RequiresPermissions("用户管理")
+    public JsonResult selectUser(){
+        List<Worker> list = workersService.selectUser();
+        return new JsonResult(200, "success",list,null );
+    }
+    @ApiOperation("查询员工的拥有的角色")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",value = "用户id"),
+    })
+    @GetMapping("/selectRole")
+    public JsonResult selectRole(Integer id){
+        List<WorkerRole> list = workersService.selectRole(id);
+        return new JsonResult(200, "success",list,null );
+    }
+    @ApiOperation("修改用户角色")
+    @PostMapping("updateRole")
+    public JsonResult updateRole(@RequestBody Map<String,Object>map){
+        Integer uid = (Integer) map.get("uid");
+        List<WorkerRole> userRole = (List<WorkerRole>) map.get("UserRole");
+        workersService.updateRole(uid,userRole);
+        return new JsonResult(200, "success",null,null );
+    }
+
 }
 

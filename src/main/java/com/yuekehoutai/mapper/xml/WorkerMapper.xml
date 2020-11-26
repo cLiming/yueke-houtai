@@ -3,7 +3,7 @@
 <mapper namespace="com.yuekehoutai.mapper.WorkerMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.yuekehoutai.haha.domain.Worker">
+    <resultMap id="BaseResultMap" type="com.yuekehoutai.domain.Worker">
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="tel" property="tel" />

@@ -1,8 +1,10 @@
 package com.yuekehoutai.service;
 
 import com.yuekehoutai.domain.Menu;
+import com.yuekehoutai.domain.Role;
 import com.yuekehoutai.domain.Worker;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yuekehoutai.domain.WorkerRole;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -20,4 +22,7 @@ public interface WorkerService extends IService<Worker> {
     List<Menu> selectWokerPermissions(Worker worker);
     List<Menu> selectButton(@Param("id") Integer id,@Param("pId") Integer pId);
     List<Menu> selectMenu(Worker worker);
+    List<Worker>selectUser();
+    List<WorkerRole>selectRole(Integer id);
+    void updateRole(Integer id,List<WorkerRole>list);
 }

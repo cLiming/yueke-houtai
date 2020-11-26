@@ -32,12 +32,15 @@ public class ViewServiceImpl extends ServiceImpl<ViewMapper, View> implements Vi
     private ViewMapper viewMapper;
     @Override
     public Page<View> selectAll(ViewParam viewParam) throws Exception {
+        System.out.println(viewParam.getPage());
         if(viewParam.getPage()!=null&&!viewParam.getPage().equals("")){
             Page<View> page1 = new Page<View>(viewParam.getPage(),3);
             QueryWrapper<View> wrapper = new QueryWrapper<View>().eq(viewParam.getCId()!=null,"c_id",viewParam.getCId()).like(viewParam.getName()!=null,"name", viewParam.getName());
-            List<View> list = viewMapper.selectList(wrapper);
-            page1.setRecords(list);
-            return page1;
+            //List<View> list = viewMapper.selectList(wrapper);
+
+            //System.out.println(list.size());
+            //page1.setRecords(list);
+            return this.page(page1,wrapper);
         }
         return null ;
     }
