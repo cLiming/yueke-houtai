@@ -31,7 +31,7 @@
 			}
 			
 			body{
-				background-image: url(../img/hospital.jpg);
+				background-image: url(../img/1585710550_329586.jpg);
 				background-size: 100%;
 				color: #000000;
 			}
@@ -60,7 +60,7 @@
 											  inactive-text="关闭自动登陆"
 											  >
 										</el-switch><br />
-										<el-button type="primary" @click="onSubmit">登陆</el-button> 
+										<el-button type="primary" @click="onSubmit()">登陆</el-button> 
 									</el-form-item>
 								</el-form> 
 							</el-col> 
@@ -82,16 +82,18 @@
 					onSubmit:function(){
 						var _this=this;
 						$.ajax({
-							url:"/workers/login",
-							data:_this.form,
-							success:function(data){
-								if(data.code=="200"){
-									location.href="/page/index.html?name="+data.obj.name;
-								}else{
-									alert(data.message);
+							url: "http://localhost:8080/worker/login",
+							data: _this.form,
+							success: function(data) {
+								if (data.code == "200") {
+									alert(data.msg);
+									location.href="/page/index.html";
+								} else {
+									alert(data.msg)
 								}
+						
 							}
-						});
+						})
 					},
 				}	
 			})
