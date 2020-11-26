@@ -3,6 +3,7 @@ package com.yuekehoutai.controller;
 
 import com.yuekehoutai.service.RoleService;
 import com.yuekehoutai.util.JsonResult;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author corazon
  * @since 2020-11-10
  */
+@Api(tags = "角色接口")
 @RestController
 @RequestMapping("/role")
 public class RoleController {
