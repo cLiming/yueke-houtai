@@ -39,6 +39,7 @@ public class ViewController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name",value = "景点名（模糊查询）"),
             @ApiImplicitParam(name = "cId",value = "城市id"),
+            @ApiImplicitParam(name = "page",value = "页数"),
     })
     public JsonResult selectAll(@Valid ViewParam viewParam)throws Exception{
         Page<View> viewPage = viewService.selectAll(viewParam);
@@ -55,7 +56,6 @@ public class ViewController {
             @ApiImplicitParam(name = "time",value = "营业时间"),
             @ApiImplicitParam(name = "cId",value = "城市id"),
             @ApiImplicitParam(name = "location",value = "经纬度"),
-            @ApiImplicitParam(name = "page",value = "页数"),
             @ApiImplicitParam(name = "file",value = "图片"),
 
     })
