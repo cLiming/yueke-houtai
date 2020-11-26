@@ -1,6 +1,7 @@
 package com.yuekehoutai.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.yuekehoutai.Dto.MenuDto;
 import com.yuekehoutai.domain.Menu;
 import com.yuekehoutai.domain.Role;
 import com.yuekehoutai.domain.Worker;
@@ -11,10 +12,12 @@ import com.yuekehoutai.mapper.WorkerRoleMapper;
 import com.yuekehoutai.service.WorkerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,20 +48,52 @@ public class WorkerServiceImpl extends ServiceImpl<WorkerMapper, Worker> impleme
 
     @Override
     public List<Menu> selectWokerPermissions(Worker worker) {
-
-        return workerMapper.selectWokerPermissions(worker);
+        QueryWrapper<Worker> workerQueryWrapper = new QueryWrapper<>();
+        workerQueryWrapper.eq("tel", worker.getTel());
+        Worker worker1 = workerMapper.selectOne(workerQueryWrapper);
+        return workerMapper.selectWokerPermissions(worker1.getId());
     }
 
     @Override
-    public List<Menu> selectButton(Integer id,Integer pId) {
-
-        return workerMapper.selectButton(id,pId);
+    public List<Menu> selectButton(Worker worker,Integer pId) {
+        QueryWrapper<Worker> workerQueryWrapper = new QueryWrapper<>();
+        workerQueryWrapper.eq("tel", worker.getTel());
+        Worker worker1 = workerMapper.selectOne(workerQueryWrapper);
+        return workerMapper.selectButton(worker1.getId(),pId);
     }
 
     @Override
-    public List<Menu> selectMenu(Worker worker) {
-        System.err.println(workerMapper.selectMenu(worker));
-        return workerMapper.selectMenu(worker);
+    public List<MenuDto> selectMenu(Worker worker) {
+        //System.out.println(workerMapper.selectMenu(worker));
+        QueryWrapper<Worker> workerQueryWrapper = new QueryWrapper<>();
+        workerQueryWrapper.eq("tel", worker.getTel());
+        Worker worker1 = workerMapper.selectOne(workerQueryWrapper);
+        //查询出所有的菜单
+        List<Menu> list = workerMapper.selectMenu(worker1.getId());
+        //用来放一集按钮
+        ArrayList<MenuDto> menuDtos = new ArrayList<>();
+        for(Menu menu:list){
+            //从数据库里面查出的所有的一级菜单
+            if(menu.getLevel().equals(1)){
+                MenuDto menuDto = new MenuDto();
+                BeanUtils.copyProperties(menu,menuDto);
+                menuDtos.add(menuDto);
+                menuDto.setChildren(new ArrayList<MenuDto>());
+            }
+        }
+        for(Menu menu:list){
+            //从数据库里面查出的所有的二级菜单
+            if(!menu.getLevel().equals(1)){
+                MenuDto menuDto = new MenuDto();
+                BeanUtils.copyProperties(menu,menuDto);
+                for (MenuDto menuone:menuDtos){
+                    if(menuone.getId()==menuDto.getPId()){
+                        menuone.getChildren().add(menuDto);
+                    }
+                }
+            }
+        }
+        return menuDtos;
     }
 
     @Override

@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 spring:
   servlet:
     multipart:
@@ -18,3 +18,4 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:com/yuekehoutai/mapper/xml/*.xml

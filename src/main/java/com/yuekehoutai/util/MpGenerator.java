@@ -32,7 +32,7 @@ public class MpGenerator {
         stConfig.setCapitalMode(true) // 全局大写命名
                 .setNaming(NamingStrategy.underline_to_camel) //下划线转驼峰
                 .setTablePrefix("t_")
-                .setInclude("t_contract");
+                .setInclude("t_businesslicense");
         //4.包名策略
         PackageConfig pkConfig = new PackageConfig();
         pkConfig.setParent("com.yuekehoutai")//父包名

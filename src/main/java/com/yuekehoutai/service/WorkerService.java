@@ -1,5 +1,6 @@
 package com.yuekehoutai.service;
 
+import com.yuekehoutai.Dto.MenuDto;
 import com.yuekehoutai.domain.Menu;
 import com.yuekehoutai.domain.Role;
 import com.yuekehoutai.domain.Worker;
@@ -20,9 +21,9 @@ import java.util.List;
 public interface WorkerService extends IService<Worker> {
     Worker selectByWorkerName(String tel) throws Exception;
     List<Menu> selectWokerPermissions(Worker worker);
-    List<Menu> selectButton(@Param("id") Integer id,@Param("pId") Integer pId);
-    List<Menu> selectMenu(Worker worker);
-    List<Worker>selectUser();
+    List<Menu> selectButton(Worker worker,Integer pId);
+    List<MenuDto> selectMenu(Worker worker);
+    List<Worker> selectUser();
     List<WorkerRole>selectRole(Integer id);
     void updateRole(Integer id,List<WorkerRole>list);
 }

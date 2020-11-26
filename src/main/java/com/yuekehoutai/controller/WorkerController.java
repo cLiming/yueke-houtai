@@ -64,7 +64,7 @@ public class WorkerController {
         Subject subject = SecurityUtils.getSubject();
 //        System.out.println(subject.isAuthenticated());
         Worker worker = (Worker)subject.getPrincipal();
-        return new JsonResult(200, "success",workersService.selectButton(worker.getId(),pid),null );
+        return new JsonResult(200, "success",workersService.selectButton(worker,pid),null );
     }
     //得到用户的1、2级菜单
 
