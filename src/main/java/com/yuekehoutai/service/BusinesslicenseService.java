@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-11-26
  */
 public interface BusinesslicenseService extends IService<Businesslicense> {
-
+    void updateStatus(Integer id);
 }
