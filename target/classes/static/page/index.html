@@ -38,7 +38,7 @@
 						<el-col :span="24">
 							<el-menu class="el-menu-vertical-demo" >
 								<div id="mokuaiming">
-									<a href="#">蜗牛医院住院部INF系统</a>
+									<a href="#">悦客房车后台管理平台</a>
 								</div>
 								
 								<el-submenu v-for="menu in menus" :index="menu.id+''">
@@ -47,12 +47,11 @@
 									</template>
 										<el-menu-item-group>
 											<el-menu-item v-for="child in menu.children" :index="child.id+''">
-											  <a class="a-class" :href="child.resource+'?pid='+child.id" target="main">{{child.name}}</a>
+											  <a class="a-class" :href="child.resources+'?pid='+child.id" target="main">{{child.name}}</a>
 											</el-menu-item>
 										</el-menu-item-group>
 								</el-submenu>
 							</el-menu>
-			
 						</el-col>
 						<el-col :span="24">
 							<div id="out">
@@ -77,20 +76,15 @@
 			el:"#app",
 			data:{
 				menus:[],
-				name:"",
 				visible: false,
-				url: '/img/timg.jpeg'
 			},
 			created:function(){
 				var reg = new RegExp("(^|&)name=([^&]*)(&|$)");
 				var r = window.location.search.substr(1).match(reg);
-				var workername = decodeURI(r[2]);
-				
 				var _this=this;
-				this.name=workername;
 				$.ajax({
-					url:"/workers/menu",
-					type:"post",
+					url:"http://localhost:8081/worker/selectMenu",
+					type:"get",
 					success:function(data){
 						_this.menus=data.list;
 					}

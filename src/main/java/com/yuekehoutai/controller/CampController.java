@@ -6,6 +6,7 @@ import com.yuekehoutai.domain.param.CampListParam;
 import com.yuekehoutai.domain.param.CampUpdateParam;
 import com.yuekehoutai.exception.ProjectException;
 import com.yuekehoutai.service.CampService;
+import com.yuekehoutai.service.CityService;
 import com.yuekehoutai.util.JsonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -32,7 +33,8 @@ import javax.validation.ValidationException;
 public class CampController {
     @Resource
     private CampService campService;
-
+    @Resource
+    private CityService cityService;
 
     @ApiOperation("查询所有加盟的营地申请")
     @GetMapping("selectAllCheck")
@@ -152,6 +154,11 @@ public class CampController {
         }
     }
 
+    @ApiOperation("查询所有城市")
+    @GetMapping("cityList")
+    public JsonResult cityList()throws Exception{
+        return new JsonResult(200,"success",cityService.list(),null);
+    }
 
 
 

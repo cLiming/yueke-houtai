@@ -82,7 +82,7 @@
 					onSubmit:function(){
 						var _this=this;
 						$.ajax({
-							url: "http://localhost:8080/worker/login",
+							url: "http://localhost:8081/worker/login",
 							data: _this.form,
 							success: function(data) {
 								if (data.code == "200") {
