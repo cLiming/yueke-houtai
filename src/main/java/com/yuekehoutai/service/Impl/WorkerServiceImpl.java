@@ -70,11 +70,12 @@ public class WorkerServiceImpl extends ServiceImpl<WorkerMapper, Worker> impleme
         Worker worker1 = workerMapper.selectOne(workerQueryWrapper);
         //查询出所有的菜单
         List<Menu> list = workerMapper.selectMenu(worker1.getId());
+        System.err.println("list"+list);
         //用来放一集按钮
         ArrayList<MenuDto> menuDtos = new ArrayList<>();
         for(Menu menu:list){
             //从数据库里面查出的所有的一级菜单
-            if(menu.getLevel().equals(1)){
+            if(menu.getpId()==0){
                 MenuDto menuDto = new MenuDto();
                 BeanUtils.copyProperties(menu,menuDto);
                 menuDtos.add(menuDto);
@@ -83,7 +84,7 @@ public class WorkerServiceImpl extends ServiceImpl<WorkerMapper, Worker> impleme
         }
         for(Menu menu:list){
             //从数据库里面查出的所有的二级菜单
-            if(!menu.getLevel().equals(1)){
+            if(menu.getpId()!=0){
                 MenuDto menuDto = new MenuDto();
                 BeanUtils.copyProperties(menu,menuDto);
                 for (MenuDto menuone:menuDtos){

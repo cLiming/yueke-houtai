@@ -73,6 +73,7 @@ public class WorkerController {
     public JsonResult selectMenu(){
         Subject subject = SecurityUtils.getSubject();
         Worker worker = (Worker)subject.getPrincipal();
+        System.err.println("service+"+workersService.selectMenu(worker));
         return new JsonResult(200, "success",workersService.selectMenu(worker),null );
     }
     @ApiOperation("查询所有员工")
