@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuekehoutai.mapper.WorkerRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yuekehoutai.domain.WorkerRole">
+        <id column="id" property="id" />
+        <result column="w_id" property="wId" />
+        <result column="r_id" property="rId" />
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, w_id, r_id
+    </sql>
+
+</mapper>

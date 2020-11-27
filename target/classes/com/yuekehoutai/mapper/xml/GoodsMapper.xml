@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuekehoutai.mapper.GoodsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yuekehoutai.domain.Goods">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="c_id" property="cId" />
+        <result column="price" property="price" />
+        <result column="description" property="description" />
+        <result column="typ" property="typ" />
+        <result column="number" property="number" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, c_id, price, description, typ, number
+    </sql>
+
+</mapper>
