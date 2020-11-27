@@ -74,7 +74,7 @@ public class WorkerServiceImpl extends ServiceImpl<WorkerMapper, Worker> impleme
         ArrayList<MenuDto> menuDtos = new ArrayList<>();
         for(Menu menu:list){
             //从数据库里面查出的所有的一级菜单
-            if(menu.getLevel().equals(1)){
+            if(menu.getLevel().equals("1")){
                 MenuDto menuDto = new MenuDto();
                 BeanUtils.copyProperties(menu,menuDto);
                 menuDtos.add(menuDto);
@@ -83,7 +83,7 @@ public class WorkerServiceImpl extends ServiceImpl<WorkerMapper, Worker> impleme
         }
         for(Menu menu:list){
             //从数据库里面查出的所有的二级菜单
-            if(!menu.getLevel().equals(1)){
+            if(!menu.getLevel().equals("1")){
                 MenuDto menuDto = new MenuDto();
                 BeanUtils.copyProperties(menu,menuDto);
                 for (MenuDto menuone:menuDtos){
