@@ -1,19 +1,19 @@
 package com.yuekehoutai.controller;
 
 
+import com.yuekehoutai.domain.Businesslicense;
 import com.yuekehoutai.service.BusinesslicenseService;
 import com.yuekehoutai.util.JsonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -29,6 +29,24 @@ import javax.annotation.Resource;
 public class BusinesslicenseController {
     @Resource
     private BusinesslicenseService businesslicenseService;
+
+    @ApiOperation("查询所有合同状态")
+    @GetMapping("selectAll")
+    public JsonResult selectAll(){
+        List<Businesslicense> list = businesslicenseService.selectAll();
+        return  new JsonResult(200,"success",list,null);
+
+    }
+    @ApiOperation("删除合同根据id")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",value = "商家id"),
+    })
+    @DeleteMapping("deleteById")
+    public JsonResult deleteById(Integer id){
+        businesslicenseService.deleteById(id);
+        return  new JsonResult(200,"success",null,null);
+
+    }
     @ApiOperation("修改合同状态为1")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id",value = "商家id"),
@@ -38,5 +56,6 @@ public class BusinesslicenseController {
         businesslicenseService.updateStatus(id);
         return  new JsonResult(200,"success",null,null);
     }
+
 }
 

@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -24,5 +25,16 @@ public class BusinesslicenseServiceImpl extends ServiceImpl<BusinesslicenseMappe
     @Override
     public void updateStatus(Integer id) {
         businesslicenseMapper.update(new Businesslicense(),new UpdateWrapper<Businesslicense>().set("status",1).eq("b_id",id));
+    }
+
+    @Override
+    public List<Businesslicense> selectAll() {
+
+        return businesslicenseMapper.selectList(null);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        businesslicenseMapper.deleteById(id);
     }
 }
