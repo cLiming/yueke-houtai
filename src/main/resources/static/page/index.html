@@ -83,7 +83,7 @@
 				var r = window.location.search.substr(1).match(reg);
 				var _this=this;
 				$.ajax({
-					url:"http://localhost:8081/worker/selectMenu",
+					url:"http://http://192.168.10.24:8081/worker/selectMenu",
 					type:"get",
 					success:function(data){
 						_this.menus=data.list;

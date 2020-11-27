@@ -19,7 +19,21 @@
 		<div id="apps" >
 			<div class="tables">
 				<div class="main-ding">
-					 <el-col :span="18"><div ></div></el-col>
+					 <el-col :span="18" style="height: 44px;">
+						 <div style="width: 1000px;">
+							 <input type="text" style="width: 350px;height: 30px;margin-left: 10px;" placeholder="请输入营地名"/>
+							 <select v-model="campStatus" style="height: 30px;">
+							 	<option value="3">所有营地</option>
+							 	<option value="0">热门</option>
+								<option value="1">普通</option>
+							 </select>
+							 <select v-model="selected" style="height: 30px;">
+							 	<option value="0">请选择城市</option>
+							 	<option v-for="(item,index) in city" :value="item.id">{{item.name}}</option>
+							 </select>
+							 <input type="button"  value="查询" style="width: 60px;height: 30px;" />
+						 </div>
+					 </el-col>
 					 	<el-col :span="1">
 						<!-- Form -->
 							<el-button icon="el-icon-edit"  @click="outerVisible = true" v-cloak>{{ss}}</el-button>
@@ -70,6 +84,7 @@
 							    <el-button type="primary" @click="submitForms('lists')">提交</el-button>
 							    <el-button @click="addDomain">新增药品</el-button>
 							   </el-form-item>
+							</el-form>
 							</el-dialog>
 						</el-col>
 
@@ -149,8 +164,13 @@
 
 			data: function() {
 				return {
-
-
+					campStatus:"3",
+					selected: '1',
+					city:[{
+						id:'',
+						name:'',
+						location:''
+					}],
 					arr:[],
 					visible: false,
 					input: '',
@@ -269,20 +289,16 @@
 
 			},
 			created(){
-				axios.get("/doc/info").then(data => {
+				axios.get("http://192.168.10.24:8081/camp/cityList").then(data => {
 					if (data.data.code == "200") {
-						this.tableData=data.data.obj.userList;
-						this.projectLists=data.data.obj.projectList;
-						this.drugLists=data.data.obj.drugList;
+						this.city=data.data.list;
 					}
 				});
-				<!--这里分页是写死的-->
-				axios.get("/doc/selectAd?pageIndex="+this.pageInfo.pageIndex+"&pageNum="+this.pageInfo.pageNum).then(data => {
-					if (data.data.code == "200") {
-						this.tableDatas=data.data.obj.records;
-
-					}
-				});
+				// axios.get("http://localhost:8081/camp/select").then(data => {
+				// 	if (data.data.code == "200") {
+				// 		this.tableData=data.data.list;
+				// 	}
+				// });
 			},
 			methods: {
 				handleEdit(index, row) {

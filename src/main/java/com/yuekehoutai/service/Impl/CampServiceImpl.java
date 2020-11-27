@@ -54,8 +54,8 @@ public class CampServiceImpl extends ServiceImpl<CampMapper, Camp> implements Ca
         if(!StringUtils.isEmpty(param.getName())){
             wrapper.like("name",param.getName());
         }
-        if(param.getStatus()>=0&&param.getStatus()<=2){
-            if(param.getStatus()==1){
+        if(param.getStatus()>=0&&param.getStatus()<=3){
+            if(param.getStatus()==3){
                 wrapper.lt("status",2);
             }else{
                 wrapper.eq("status",param.getStatus());
