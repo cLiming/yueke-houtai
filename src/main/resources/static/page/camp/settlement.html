@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>出院结算</title>
+    <title>录入合同</title>
 
     <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/js/vue.js"></script>
@@ -17,8 +17,8 @@
 <div id="app">
 
     <el-table :data="list" border style="width: 100%">
-        <el-table-column fixed prop="id" label="编号"> </el-table-column>
-        <el-table-column  prop="name" label="姓名"> </el-table-column>
+        <el-table-column fixed prop="id" label="合同编号"> </el-table-column>
+        <el-table-column  prop="campId" label="营地合同"> </el-table-column>
         <el-table-column  prop="sex" label="性别"> </el-table-column>
         <el-table-column  prop="age" label="年龄"> </el-table-column>
         <el-table-column prop="idCard" label="身份证号"> </el-table-column>

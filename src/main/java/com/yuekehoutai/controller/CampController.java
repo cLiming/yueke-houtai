@@ -59,7 +59,7 @@ public class CampController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "cityId",value = "城市ID",required=true),
             @ApiImplicitParam(name = "name",value = "营地名称"),
-            @ApiImplicitParam(name = "status",value = "营地状态0热门 1普通",required=true),
+            @ApiImplicitParam(name = "status",value = "营地状态0热门 1普通 2待审核",required=true),
             @ApiImplicitParam(name = "pageIndex",value = "当前页码",required=true),
             @ApiImplicitParam(name = "pageNum",value = "每页数据条数",required=true)
     })
