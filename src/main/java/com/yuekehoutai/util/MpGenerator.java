@@ -14,7 +14,7 @@ public class MpGenerator {
         //1. 全局配置
         GlobalConfig config = new GlobalConfig();
         config.setAuthor("corazon") //作者
-                .setOutputDir("D:\\gitProject\\yueke-houtai\\src\\main\\java")  //生成路径
+                .setOutputDir("E:\\Git-repository\\yueke-houtai\\src\\main\\java")  //生成路径
                 .setFileOverride(true)//是否文件覆盖，如果多次
                 .setIdType(IdType.AUTO) //主键策略
                 .setServiceName("%sService")//设置生成的service接口名首字母不用I开头
@@ -32,7 +32,7 @@ public class MpGenerator {
         stConfig.setCapitalMode(true) // 全局大写命名
                 .setNaming(NamingStrategy.underline_to_camel) //下划线转驼峰
                 .setTablePrefix("t_")
-                .setInclude("t_businesslicense");
+                .setInclude("t_camp_contract");
         //4.包名策略
         PackageConfig pkConfig = new PackageConfig();
         pkConfig.setParent("com.yuekehoutai")//父包名
