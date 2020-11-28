@@ -1,6 +1,7 @@
 package com.yuekehoutai.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuekehoutai.domain.View;
 import com.yuekehoutai.domain.param.ViewParam;
@@ -42,10 +43,20 @@ public class ViewController {
             @ApiImplicitParam(name = "page",value = "页数"),
     })
     public JsonResult selectAll(@Valid ViewParam viewParam)throws Exception{
+        System.out.println(viewParam.toString());
         Page<View> viewPage = viewService.selectAll(viewParam);
         return new JsonResult(200,"success",null,viewPage);
     }
-
+    //根据id查景点
+    @ApiOperation("查询景点（根据id）")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",value = "景点id")
+    })
+    @GetMapping("/selectViewById")
+    public JsonResult selectViewById(Integer id){
+        View view = viewService.getOne(new QueryWrapper<View>().eq("id", id));
+        return  new JsonResult(200,"success",null,view);
+    }
     //新增景点
     @ApiOperation("新增景点")
     @ApiImplicitParams({
@@ -61,6 +72,7 @@ public class ViewController {
     })
     @PostMapping("insertView")
     public JsonResult insertView(ViewParam viewParam)throws Exception{
+        System.out.println(viewParam.toString());
         viewService.insrtView(viewParam);
         return new JsonResult(200,"success",null,null);
     }
