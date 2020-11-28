@@ -15,6 +15,7 @@ import com.yuekehoutai.util.StringTool;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +31,8 @@ import java.util.List;
 @Service
 public class CampServiceImpl extends ServiceImpl<CampMapper, Camp> implements CampService {
 
+    @Resource
+    private CampMapper campMapper;
     @Override
     public List<Camp> selectAllCheck() {
         QueryWrapper<Camp> queryWrapper = new QueryWrapper<>();
@@ -109,6 +112,7 @@ public class CampServiceImpl extends ServiceImpl<CampMapper, Camp> implements Ca
 
         return this.updateById(camp);
     }
+
 
 
 }
