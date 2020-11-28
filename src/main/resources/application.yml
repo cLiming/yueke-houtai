@@ -11,6 +11,7 @@ spring:
     username: root
     password: Clm853211585
     type: com.alibaba.druid.pool.DruidDataSource
+
   mvc:
     date-format: yyyy-MM-dd
   jackson:

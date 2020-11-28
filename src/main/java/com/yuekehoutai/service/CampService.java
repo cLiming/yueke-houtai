@@ -21,16 +21,16 @@ public interface CampService extends IService<Camp> {
 
     List<Camp> selectAllCheck();
 
-    @Transactional
+   //@Transactional
     boolean campstatusUpdate(Integer id,Integer status);
 
     Page campListLimit(CampListParam param)throws Exception;
 
-    @Transactional
+   // @Transactional
     boolean removeImage(Integer id,String image)throws Exception;
-    @Transactional
+   // @Transactional
     boolean removeImages(Integer id)throws Exception;
-    @Transactional
+   // @Transactional
     boolean updateCamp(Camp camp, MultipartFile[] files)throws Exception;
 
 }
