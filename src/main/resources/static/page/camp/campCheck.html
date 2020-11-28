@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>营地加盟合同管理</title>
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/js/vue.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet"
+          href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+</head>
+<body>
+<div id="app">
+    <el-row>
+        <el-button type="success" @click="addContract">录入合同</el-button>
+    </el-row>
+    <el-form-item label="营地编号">
+        <el-input v-model="campContract.campId"></el-input>
+    </el-form-item>
+    <el-form-item label="合同状态">
+        <el-select v-model="campContract.status" placeholder="">
+            <el-option label="所有" value="null" checked="true"></el-option>
+            <el-option label="已审核" value="1"></el-option>
+            <el-option label="未审核" value="2"></el-option>
+        </el-select>
+    </el-form-item>
+    <el-table :data="list" border style="width: 100%">
+        <el-table-column fixed prop="id" label="合同编号"> </el-table-column>
+        <el-table-column  prop="campId" label="营地编号"> </el-table-column>
+        <el-table-column  prop="workerId" label="审核员编号"> </el-table-column>
+        <el-table-column  prop="images" label="凭证照片"> </el-table-column>
+        <el-table-column prop="status" label="状态"> </el-table-column>
+        <el-table-column  prop="cost" label="加盟费用"> </el-table-column>
+        <el-table-column  label="操作">
+            <template slot-scope="scope">
+                <el-button  @click="checkCampContract(scope.row)" type="primary" plain size="small" >无问题，通过</el-button>
+                <el-button  @click="updateCampContract(scope.row)" type="primary" plain size="small" >有问题？修改</el-button>
+            </template>
+        </el-table-column>
+    </el-table>
+    <el-dialog title="修改合同" :visible.sync="dialogVisible">
+        <el-form ref="form" :model="campContract" label-width="80px">
+            <el-form-item label="合同编号">
+                <el-input v-model="campContract.id" disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="营地编号">
+                <el-input v-model="campContract.campId" disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="审核人编号">
+                <el-input v-model="campContract.workerId" ></el-input>
+            </el-form-item>
+            <el-form-item label="凭证照片">
+                <el-input v-model="campContract.images" disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="加盟费用">
+                <el-input v-model="campContract.cost" ></el-input>
+            </el-form-item>
+        </el-form>
+        <el-form-item>
+            <el-button type="primary" @click="onSubmit">修改</el-button>
+            <el-button @click="resetForm">取消</el-button>
+        </el-form-item>
+    </el-dialog>
+    <el-dialog title="新增合同" :visible.sync="addVisible">
+        <el-form ref="form" :model="campContract" label-width="80px">
+            <el-form-item label="营地编号">
+                <el-input v-model="campContract.campId" disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="审核人编号">
+                <el-input v-model="campContract.workerId" ></el-input>
+            </el-form-item>
+            <el-form-item label="凭证照片">
+                <el-input v-model="campContract.images" disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="加盟费用">
+                <el-input v-model="campContract.cost" ></el-input>
+            </el-form-item>
+        </el-form>
+        <el-form-item>
+            <el-button type="primary" @click="tijiao">提交</el-button>
+            <el-button @click="quxiao">取消</el-button>
+        </el-form-item>
+    </el-dialog>
+</div>
+<script type="text/javascript">
+    new Vue({
+        el:"#app",
+        data:{
+            list:[],
+            campContract:{
+                id:null,
+                campId:null,
+                workerId:null,
+                images:"",
+                status:null,
+                cost:null
+            },
+            dialogVisible:false,
+            addVisible:false,
+        },
+        created:function(){
+            this.selectData();
+        },
+        methods:{
+            selectData:function(){
+                let _this=this;
+                $.ajax({
+                    url:"/campContract/selectCampContract",
+                    data:_this.campContract,
+                    success:function(data){
+                        if(data.code==200){
+                            _this.list=data.list;
+                        }
+                    }
+                });
+            },
+            checkCampContract(campcon){
+                let _this=this;
+                campcon.status=1;
+                $.ajax({
+                    url:"/campContract/checkCamp",
+                    data:campcon,
+                    success:function(data){
+                        if(data.code==200){
+                            location.reload();
+                        }
+                    }
+                });
+            },
+            updateCampContract(campcont){
+                this.dialogVisible=true;
+                this.campContract=campcont;
+            },
+            resetForm(formNames) {
+                this.dialogVisible=false;
+            },
+            onSubmit(){
+                let _this=this;
+                $.ajax({
+                    url:"/campContract/checkCamp",
+                    type:"post",
+                    data:_this.campContract,
+                    success:function(data){
+                        if(data.code==200){
+                            alert("修改成功")
+                        }
+                    }
+                });
+            },
+            tijiao(){
+                this.addVisible=false;
+                let _this=this;
+                $.ajax({
+                    url:"/campContract/insertCampHeTong",
+                    type:"post",
+                    data:_this.campContract,
+                    success:function(data){
+                        if(data.code==200){
+                            alert("录入成功")
+                        }
+                    }
+                });
+            },
+            quxiao(){
+                this.addVisible=false;
+            },
+            addContract(){
+                this.addVisible=true;
+                this.campContract=null;
+            }
+        }
+    });
+</script>
+</body>
+</html>

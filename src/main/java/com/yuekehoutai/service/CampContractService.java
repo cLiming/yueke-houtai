@@ -3,6 +3,9 @@ package com.yuekehoutai.service;
 import com.yuekehoutai.Dto.CampContractDto;
 import com.yuekehoutai.domain.CampContract;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yuekehoutai.param.CampContractParam;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +18,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface CampContractService extends IService<CampContract> {
 
     void insertCampContract(CampContractDto contractDto);
+
+    void setCampContract(CampContractDto contractDto);
+
+    List<CampContract> getCampContract(CampContractParam campContractParam);
 }

@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class CampContractParam {
+    private  int id;
+
     private Integer campId;
 
     private Integer workerId;
